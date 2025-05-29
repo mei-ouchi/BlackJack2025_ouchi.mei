@@ -19,7 +19,7 @@ import model.User;
 public class LoginServlet extends HttpServlet {
 	//ログイン
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String UserId = request.getParameter("UserId");
+		String UserId = request.getParameter("user_id");
 		String password = request.getParameter("password");
 		String nextPage = null;
 		

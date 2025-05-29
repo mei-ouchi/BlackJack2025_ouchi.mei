@@ -11,30 +11,31 @@
             <span class="navbar-toggler-icon"></span>
     </button>
     
-    <%
-    	User user = (User)session.getAttribute("user");
-    if(user != null){
-    %>
+	<%
+		User user = (User)session.getAttribute("user");
+		if(user != null){
+	 %>
+	    
  		<div class="collapse navbar-collapse" id="navbarResponsive">
+ 		<div class="navbar-text text-mute ml-3">
+					ログイン中：<%= user.getUserName() %>さん
+		</div>
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item">
-					<a class="nav-link" href="game_top.jsp">トップへ戻る</a>
+					<a class="btn btn-success" href="game_top.jsp">トップへ戻る</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="RankingServlet">あなたの戦績</a>
+					<a class="btn btn-success" href="RankingServlet">あなたの戦績</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="UserServlet?action=delete">アカウントの削除</a>
+					<a class="btn btn-del" href="UserServlet?action=delete">アカウントの削除</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="LoginServlet">ログアウト</a>
+					<a class="nav-link text-mute" href="LoginServlet">ログアウト</a>
 				</li>
 			</ul>
-			<div class="navbar-text text-white ml-3">
-					<%= user.getUserName() %>さん
-			</div>
 		</div>  
-		          
-   <%} %>
+	<%} %>	          
+	
 	</div>
 </nav>

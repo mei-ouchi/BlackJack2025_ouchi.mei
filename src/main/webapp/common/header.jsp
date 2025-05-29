@@ -26,6 +26,18 @@ main {
     padding: 20px 0;
 }
 
+.welcome-session h1{
+	font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-weight: 700;
+    color: #333;
+}
+
+.welcome-session p{
+	font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-weight: 500;
+    color: #333;
+}
+
 .login-heading, .register-heading {
     font-family: 'Mochiy Pop One', cursive, sans-serif;
     font-size: 2.5rem;
@@ -38,7 +50,7 @@ main {
     background-color: #C2185B;
     border-color: #C2185B;
     color: #FFFFFF;
-    border-radius: 20px !important;
+    border-radius: 10spx !important;
     font-weight: bold; 
 }
 
@@ -47,29 +59,56 @@ main {
     border-color: #FF1493;
 }
 
+.btn-secondary {
+    background-color: #FFB6C1;
+    border-color: #C2185B;
+    color: #C2185B;
+    border-radius: 10px !important;
+}
+
+.btn-secondary:hover {
+    background-color: #FFC0CB;
+    color: #FF1493;
+    border-color: #FF1493;
+}
+
 .btn-success {
-    background-color: #C2185B;
-    border-color: #D81B60;
-    color: #FFFFFF;
-    border-radius: 20px !important; 
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+    color: #000000;
+    border-radius: 10px !important; 
     font-weight: bold;
 }
 
 .btn-success:hover {
-    background-color: #C2185B; 
+    background-color: #F0F0F0; 
+    border-color: #AAAAAA;
+}
+
+.btn-del {
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+    color: #CC0000;
+    border-radius: 10px !important; 
+    font-weight: bold;
+}
+
+.btn-del:hover {
+    background-color: #F0F0F0; 
+    border-color: #AAAAAA;
+}
+
+.btn-start {
+    background-color: #C2185B;
     border-color: #C2185B;
-}
-
-.btn-secondary {
-    background-color: #C2185B;
-    border-color: #FFC0CB;
     color: #FFFFFF;
-    border-radius: 20px !important;
+    border-radius: 50px !important;
+    font-weight: bold;
 }
 
-.btn-secondary:hover {
-    background-color: #C2185B;
-    border-color: #FFB6C1;
+.btn-start:hover {
+    background-color: #FF1493; 
+    border-color: #FF1493;
 }
 
 </style>

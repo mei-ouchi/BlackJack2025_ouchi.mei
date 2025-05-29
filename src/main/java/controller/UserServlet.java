@@ -19,8 +19,8 @@ import model.User;
 public class UserServlet extends HttpServlet {
 	//新規登録
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String UserId = request.getParameter("UserId");
-		String UserName = request.getParameter("UserName");
+		String UserId = request.getParameter("user_id");
+		String UserName = request.getParameter("user_name");
 		String password = request.getParameter("password");
 		String confirmPassword = request.getParameter("confirmPassword");
 		
@@ -96,7 +96,6 @@ public class UserServlet extends HttpServlet {
 		UserDao userDao = new UserDao();
 		
 		if("delete".equals(action)) {
-			User user = (User)session.getAttribute("user");
 			 if(user == null) {
 				 throw new BlackJackException("削除するユーザ情報は見つかりませんでした");
 			 }else{

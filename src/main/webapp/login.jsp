@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ page import="model.User" %>
+<%@ page import="model.User" %>
 <!DOCTYPE html>
 <html lang="ja">
 	<jsp:include page="common/header.jsp"/>
@@ -33,19 +33,19 @@
 				<div class="input-group-prepend">
 					<span class="input-group-text">ユーザーID</span>
 				</div>
-				<input type="text" id="loginId" name="loginId" class="form-control" required autofocus>
+				<input type="text" id="UserId" name="user_id" class="form-control" required autofocus>
 			</div>
 			<div class="input-group input-group-custom">
 				<div class="input-group-prepend">
 					<span class="input-group-text">ユーザー名</span>
 				</div>
-				<input type="text" id="username" name="username" class="form-control" required>
+				<input type="text" id="UserName" name="user_name" class="form-control" required>
 			</div>
 			<div class="input-group input-group-custom">
 				<div class="input-group-prepend">
 					<span class="input-group-text">パスワード</span>
 				</div>
-				<input type="password" id="loginPassword" name="loginPassword" class="form-control" required>
+				<input type="password" id="password" name="password" class="form-control" required>
 			</div>
 			<button class="btn btn-lg btn-primary btn-block btn-login font-weight-bold mb-2" type="submit">
 				ログイン
