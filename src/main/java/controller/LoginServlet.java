@@ -19,19 +19,18 @@ import model.User;
 public class LoginServlet extends HttpServlet {
 	//ログイン
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String UserId = request.getParameter("user_id");
-		String password = request.getParameter("password");
+		String userId = request.getParameter("user_id");
+		String loginPassword = request.getParameter("password");
 		String nextPage = null;
 		
 		try {
 			UserDao userDao = new UserDao();
-			User user = userDao.doLogin(UserId, password);
+			User user = userDao.doLogin(userId, loginPassword);
 			
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
 			
 			nextPage="game_top.jsp";
-			return;
 		}catch(BlackJackException e){
 			String message = e.getMessage();
 			request.setAttribute("message", message);

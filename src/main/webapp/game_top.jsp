@@ -9,10 +9,28 @@
 	
 	<main>
 	 
+	 <%
+	User user = (User) session.getAttribute("user");
+	if (user != null) {
+	%>
+	
 	<div class="welcome-session">
 		<h1 class="display-4">ようこそ！ <%= user.getUserName() %> さん</h1>
 			<p class="lead">一緒にブラックジャックをプレイしましょう！</p>
 	</div>
+	
+	<%
+	}else{
+	%>
+	
+	<div class="welcome-session">
+		<h1 class="display-4">ようこそ！</h1>
+			<p class="lead">ログイン、または陰気アカウント登録をしてください！</p>
+			<p><a href="login.jsp">ログインページへ</a></p>
+	</div>
+	
+	
+	<%} %>
 	
 	<div class="action-buttons d-flex flex-column align-items-center">
 		<button type="button" class="btn btn-start btn-lg" onclick="location.href='GameServlet'">Game Start!</button>

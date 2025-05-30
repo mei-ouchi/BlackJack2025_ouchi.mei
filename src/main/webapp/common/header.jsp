@@ -26,6 +26,7 @@ main {
     padding: 20px 0;
 }
 
+
 .welcome-session h1{
 	font-family: 'M PLUS Rounded 1c', sans-serif;
     font-weight: 700;

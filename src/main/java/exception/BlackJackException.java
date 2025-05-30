@@ -6,4 +6,8 @@ public class BlackJackException extends Exception{
 		super(message);
 	}
 	
+	public BlackJackException(String message, Throwable cause) {
+		super(message, cause);
+	}
+	
 }

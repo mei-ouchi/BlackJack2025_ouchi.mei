@@ -19,9 +19,9 @@ import model.User;
 public class UserServlet extends HttpServlet {
 	//新規登録
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String UserId = request.getParameter("user_id");
-		String UserName = request.getParameter("user_name");
-		String password = request.getParameter("password");
+		String userId = request.getParameter("user_id");
+		String userName = request.getParameter("user_name");
+		String loginPassword = request.getParameter("password");
 		String confirmPassword = request.getParameter("confirmPassword");
 		
 		String message = null;
@@ -31,35 +31,33 @@ public class UserServlet extends HttpServlet {
 		UserDao userDao = new UserDao();
 		
 		try {
-			if(UserId == null || UserId.isEmpty()
-				|| UserName == null || UserName.isEmpty()
-				|| password ==null || password.isEmpty()
-				|| !password.equals(confirmPassword)
+			if(userId == null || userId.isEmpty()
+				|| userName == null || userName.isEmpty()
+				|| loginPassword ==null || loginPassword.isEmpty()
+				|| !loginPassword.equals(confirmPassword)
 				) {
 				throw new BlackJackException("すべてのユーザ情報が入力されていないか、パスワードが一致しません");
 			}
 			
-			userDao.registerUser(UserId, UserName, password);
+			userDao.registerUser(userId, userName, loginPassword);
 			message = "アカウントの新規登録が完了しました";
+			request.setAttribute("message", message);
 			nextPage = "login.jsp";
 			 
 		}catch(BlackJackException e) {
 			e.printStackTrace();
 			message = e.getMessage();
-			request.setAttribute("message", message);
-			request.setAttribute("error", "true");
-			
 			nextPage = "NewAccount.jsp";
 		}catch (Exception e) {
 			e.printStackTrace();
 			message = "アカウント登録に失敗しました";
-			request.setAttribute("message", message);
-			request.setAttribute("error", "true");
-			
 			nextPage = "NewAccount.jsp";
 		}
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("nextPage");
+		request.setAttribute("message", message);
+		request.setAttribute("error", "true");
+		
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(nextPage);
 		requestDispatcher.forward(request, response);
 
 		
@@ -86,7 +84,7 @@ public class UserServlet extends HttpServlet {
 			request.setAttribute("message", message);
 			request.setAttribute("error", "true");
 			
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("nextPage");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher(nextPage);
 			requestDispatcher.forward(request, response);
 			return;
 		}
