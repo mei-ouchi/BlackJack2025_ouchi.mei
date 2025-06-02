@@ -25,7 +25,7 @@
 	
 	<div class="welcome-session">
 		<h1 class="display-4">ようこそ！</h1>
-			<p class="lead">ログイン、または陰気アカウント登録をしてください！</p>
+			<p class="lead">ログイン、または新規アカウント登録をしてください！</p>
 			<p><a href="login.jsp">ログインページへ</a></p>
 	</div>
 	

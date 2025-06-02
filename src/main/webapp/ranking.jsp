@@ -33,8 +33,8 @@
 	
 	<main>
 	
-	<div class="container my-5">
-		<h2 class="text-center mb-4">あなたの戦績</h2>
+	<div class="welcome-session">
+		<h1 class="display-4 text-center">あなたの戦績</h1>
 		<div class="card shadow p-4 mb-5">
 			<div class="card-body">
 			<%
@@ -69,7 +69,7 @@
 			</div>
 		</div>
 	
-		<h2 class="text-center mb-4">勝率ランキングTop5</h2>
+		<h1 class="welcome-session">勝率ランキングTop5</h1>
 		<div class="row justify-content-center">
 			<%
 			List<UserStats> topUserStatsList = (List<UserStats>)request.getAttribute("topUserStatsList");
