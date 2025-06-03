@@ -8,7 +8,23 @@
 	
 	<main>
 		<div class="login-form-container">
-		<h2 class="register-heading text-center my-4">新規アカウント登録</h2>
+		<h2 class="register-heading text-center text-white my-4">新規アカウント登録</h2>
+		
+		<%
+			String message = (String)request.getAttribute("message");
+			String error = (String)request.getAttribute("error");
+			
+			if(message != null && error ==null){
+		%>
+			<div class="alert alert-success" role="alert">
+				<%= message %>
+			</div>
+		<%
+			} else if(message != null && error != null) { %>
+			<div class="alert alert-danger" role="alert">
+				<%= message %>
+			</div>
+		<% } %>
 		
 		<form action="UserServlet" method="post">
 			<div class="input-group input-group-custom">

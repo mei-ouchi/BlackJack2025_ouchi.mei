@@ -11,7 +11,7 @@ body {
     flex-direction: column;
     min-height: 100vh;
     
-	background-image: url('image/d884b87e9adac683aa302a7735feb852.jpg');
+	background-image: url('image/1624203006_wXuRKy.jpg');
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center center;
@@ -42,74 +42,98 @@ main {
 .login-heading, .register-heading {
     font-family: 'Mochiy Pop One', cursive, sans-serif;
     font-size: 2.5rem;
-    color: #C2185B;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 1.5rem !important;
 }
 
 .btn-primary {
-    background-color: #C2185B;
-    border-color: #C2185B;
+    background-color: #fd7e00;
+    border-color: #fd7e00;
     color: #FFFFFF;
     border-radius: 10spx !important;
     font-weight: bold; 
 }
 
 .btn-primary:hover {
-    background-color: #FF1493; 
-    border-color: #FF1493;
+    background-color: #ffa965; 
+    border-color: #ffa965;
 }
 
 .btn-secondary {
-    background-color: #FFB6C1;
-    border-color: #C2185B;
-    color: #C2185B;
+    background-color: #ffa965;
+    border-color: #ffa965;
+    color: #ffffff;
     border-radius: 10px !important;
 }
 
 .btn-secondary:hover {
-    background-color: #FFC0CB;
-    color: #FF1493;
-    border-color: #FF1493;
+    background-color: #ffbf8b;
+    color: #ffffff;
+    border-color: #ffbf8b;
 }
 
 .btn-success {
-    background-color: #FFFFFF;
-    border-color: #FFFFFF;
+    background-color: #bcbcbc;
+    border-color: #bcbcbc;
     color: #000000;
     border-radius: 10px !important; 
     font-weight: bold;
 }
 
 .btn-success:hover {
-    background-color: #F0F0F0; 
-    border-color: #AAAAAA;
+    background-color: #f5f5f5; 
+    border-color: #f5f5f5;
+    color: #333333;
 }
 
 .btn-del {
-    background-color: #FFFFFF;
-    border-color: #FFFFFF;
+    background-color: #bcbcbc;
+    border-color: #bcbcbc;
     color: #CC0000;
     border-radius: 10px !important; 
     font-weight: bold;
 }
 
 .btn-del:hover {
-    background-color: #F0F0F0; 
-    border-color: #AAAAAA;
+    background-color: #f5f5f5; 
+    border-color: #f5f5f5;
+    color: #ff0000;
 }
 
 .btn-start {
-    background-color: #C2185B;
-    border-color: #C2185B;
+    background-color: #fd7e00;
+    border-color: #fd7e00;
     color: #FFFFFF;
     border-radius: 50px !important;
     font-weight: bold;
 }
 
 .btn-start:hover {
-    background-color: #FF1493; 
-    border-color: #FF1493;
+    background-color: #ff9d30; 
+    border-color: #ff9d30;
+}
+
+.user-name strong{
+	color: #ff8c00;
+	margin-left: 400px;
+}
+
+.welcome-text{
+	font-size: 1.5em;
+	color: #FFFFFF;
+	margin-left: 300px;
+}
+
+.user strong{
+	color: #C2185B;
+}
+
+.lead {
+	margin-left: 300px;
+}
+
+.loginlink{
+	margin-left: 700px;
 }
 
 </style>

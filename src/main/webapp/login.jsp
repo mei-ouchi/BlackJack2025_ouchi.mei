@@ -9,7 +9,7 @@
 	
 	<main>
 		<div class="login-form-container">
-		<h2 class="login-heading text-center my-4">ログイン</h2>
+		<h2 class="login-heading text-center text-white my-4">ログイン</h2>
 		
 		<%
 			String message = (String)request.getAttribute("message");

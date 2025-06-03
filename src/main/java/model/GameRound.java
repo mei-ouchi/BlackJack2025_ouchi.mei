@@ -2,6 +2,35 @@ package model;
 
 public class GameRound {
 	
+	public enum GameResult {
+		PLAYER_WIN("PLAYER_WIN"),
+		DEALER_WIN("DEALER_WIN"),
+		DRAW("DRAW"),
+		PLAYER_BJ("PLAYER_BJ"),
+		DEALER_BJ("DEALER_BJ"),
+		PLAYER_BUST("PLAYER_BUST"),
+		DEALER_BUST("DEALER_BUST");
+		
+		private final String db;
+		
+		GameResult(String db){
+			this.db=db;
+		}
+		
+		public String getDb() {
+			return db;
+		}
+		
+		public static GameResult fromDbValue(String db) {
+			for(GameResult result : GameResult.values()){
+				if(result.getDb().equals(db)) {
+					return result;
+				}
+			}
+			throw new IllegalArgumentException("対応する値が見つかりません："+db);
+		}
+	}
+	
 	private int roundId;
 	private int sessionId;
 	private int roundNumber;
@@ -58,7 +87,7 @@ public class GameRound {
 		this.sessionId=sessionId;
 	}
 	
-	public int getRoundNUmber() {
+	public int getRoundNumber() {
 		return roundNumber;
 	}
 	
@@ -90,7 +119,7 @@ public class GameRound {
 		this.playerScore=playerScore;
 	}
 	
-	public int getdealerScore() {
+	public int getDealerScore() {
 		return dealerScore;
 	}
 	
@@ -106,7 +135,7 @@ public class GameRound {
 		this.betChip=betChip;
 	}
 	
-	public int chipChange() {
+	public int getChipChange() {
 		return chipChange;
 	}
 	
@@ -122,28 +151,12 @@ public class GameRound {
 		this.playerCardIndex=playerCardIndex;
 	}
 	
-	public GameResult gameResult() {
+	public GameResult getGameResult() {
 		return gameResult;
 	}
 	
-	public void gameResult(GameResult gameResult) {
+	public void setGameResult(GameResult gameResult) {
 		this.gameResult=gameResult;
 	}
-	
-	@Override
-	public String toString() {
-		return "GameRound{"+
-				"roundId:"+roundId+
-				", sessionId:"+sessionId+
-				", roundNUmber:"+roundNumber+
-				", playerCard:\""+playerCard+"\""+
-				", dealerCrad:\""+dealerCard+"\""+
-				", playerScore:"+playerScore+
-				", dealerScore:"+dealerScore+
-				", betChip:"+betChip+
-				",  chipChange:"+chipChange+
-				", playerCardIndex:"+playerCardIndex+
-				"gameResult:"+gameResult+
-				"}";
-	}
 }
+	

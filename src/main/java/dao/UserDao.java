@@ -30,7 +30,7 @@ public class UserDao extends BaseDao{
 			}
 			
 			if(user == null) {
-				throw new BlackJackException("アカウントは未登録、または、入力した情報が間違って間違っています");
+				throw new BlackJackException("アカウントが未登録、または、入力した情報が間違って間違っています");
 			}
 		}catch(SQLException e) {
 			e.printStackTrace(); 
@@ -42,10 +42,6 @@ public class UserDao extends BaseDao{
 	//新規登録
 	public void registerUser(String userId, String userName, String loginPassword) throws BlackJackException{
 		try(Connection con = getConnection()) {
-			
-			if(UserIdExist(userId, con)) {
-				throw new BlackJackException("このIDはすでに使用されています");
-			}
 			try(PreparedStatement ps = con.prepareStatement("INSERT INTO user (user_id, user_name, password, total_game, wins, loses, draws, now_chip) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")){
 			ps.setString(1, userId);
 			ps.setString(2, userName);
@@ -58,16 +54,17 @@ public class UserDao extends BaseDao{
 			ps.executeUpdate();
 			}
 			
-			}catch(SQLException e) {
+		}catch(SQLException e) {
 				e.printStackTrace();
 				throw new BlackJackException("アカウントの登録に失敗しました");
 			}
-		}
+	}
 	
 	//IDチェック
-	private boolean UserIdExist(String userId, Connection con) throws BlackJackException{
+	public boolean userIdExist(String userId) throws BlackJackException{
 		
-		try(PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM user WHERE user_id = ?")) {
+		try(Connection con = getConnection();
+				PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM user WHERE user_id = ?")) {
 			ps.setString(1, userId);
 			try(ResultSet rs = ps.executeQuery();) {
 				if(rs.next()) {

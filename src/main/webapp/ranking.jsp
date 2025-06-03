@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="model.User" %>
-<%@ page import="model.UserStats" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.DecimalFormat" %> 
 <!DOCTYPE html>
@@ -34,11 +33,11 @@
 	<main>
 	
 	<div class="welcome-session">
-		<h1 class="display-4 text-center">あなたの戦績</h1>
+		<h1 class="display-4 text-center text-white">あなたの戦績</h1>
 		<div class="card shadow p-4 mb-5">
 			<div class="card-body">
 			<%
-			UserStats userStats = (UserStats)request.getAttribute("userStats");
+			User userStats = (User)request.getAttribute("userStats");
 			DecimalFormat df = new DecimalFormat("#.##");//小数点以下２桁
 			
 			if(userStats != null){
@@ -54,8 +53,8 @@
 			}
 			%>
 			
-			<p><strong><%=userStats.getUserName() %></strong>さん</p>
-			<p><strong>総プレイ回数</strong><%=totalGame %></p>
+			<p class="user"><strong><%=userStats.getUserName() %>さん</strong></p>
+			<p><strong>総プレイ回数：</strong><%=totalGame %></p>
 			<p><strong>勝利数：</strong><%=wins %></p>
 			<p><strong>敗北数：</strong><%=loses %></p>
 			<p><strong>引き分け数：</strong><%=draws %></p>
@@ -69,15 +68,15 @@
 			</div>
 		</div>
 	
-		<h1 class="welcome-session">勝率ランキングTop5</h1>
+		<h1 class="welcome-session text-white">勝率ランキングTop5</h1>
 		<div class="row justify-content-center">
 			<%
-			List<UserStats> topUserStatsList = (List<UserStats>)request.getAttribute("topUserStatsList");
+			List<User> topUserList = (List<User>)request.getAttribute("topUserStatsList");
 			DecimalFormat df_top = new DecimalFormat("#.##");
 			
-			if(topUserStatsList != null && topUserStatsList.isEmpty()){
-				for(int i=0; i<topUserStatsList.size(); i++){
-					UserStats topUserStats= topUserStatsList.get(i);
+			if(topUserList != null && topUserList.isEmpty()){
+				for(int i=0; i<topUserList.size(); i++){
+					User topUserStats= topUserList.get(i);
 					
 					int topUserTotalGame = topUserStats.getTotalGame();
 					int topUserWins = topUserStats.getWins();
@@ -108,7 +107,7 @@
 			%>
 			
 			<div class="col-12 text-center">
-				<p>not person</p>
+				<p class="text-white">not person</p>
 			</div>
 			<%	
 			}

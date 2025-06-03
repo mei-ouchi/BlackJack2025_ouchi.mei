@@ -15,27 +15,28 @@
 	%>
 	
 	<div class="welcome-session">
-		<h1 class="display-4">ようこそ！ <%= user.getUserName() %> さん</h1>
-			<p class="lead">一緒にブラックジャックをプレイしましょう！</p>
+		<h1 class="display-4"><span class="welcome-text">ようこそ！</span>
+			<p class="user-name text-white"><strong><%= user.getUserName() %></strong>さん</p></h1>
+			<p class="lead text-white">一緒にブラックジャックをプレイしましょう！</p>
 	</div>
+	
+	<div class="action-buttons d-flex flex-column align-items-center">
+		<button type="button" class="btn btn-start btn-lg" onclick="location.href='GameServlet'">Game Start!</button>
+	</div>
+	
 	
 	<%
 	}else{
 	%>
 	
 	<div class="welcome-session">
-		<h1 class="display-4">ようこそ！</h1>
-			<p class="lead">ログイン、または新規アカウント登録をしてください！</p>
-			<p><a href="login.jsp">ログインページへ</a></p>
+		<h1 class="display-4"><span class="welcome-text">ようこそ！</span></h1>
+			<p class="lead text-white">ログイン、または新規アカウント登録をしてください！</p>
+			<p class="loginlink"><a href="login.jsp">ログインページへ</a></p>
 	</div>
 	
 	
 	<%} %>
-	
-	<div class="action-buttons d-flex flex-column align-items-center">
-		<button type="button" class="btn btn-start btn-lg" onclick="location.href='GameServlet'">Game Start!</button>
-	</div>
-	
 	
 	</main>
 	<jsp:include page="common/footer.jsp"/>

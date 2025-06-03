@@ -39,6 +39,11 @@ public class UserServlet extends HttpServlet {
 				throw new BlackJackException("すべてのユーザ情報が入力されていないか、パスワードが一致しません");
 			}
 			
+			if(userDao.userIdExist(userId)) {
+				throw new BlackJackException("このIDはすでに使用されています");
+				
+			}
+			
 			userDao.registerUser(userId, userName, loginPassword);
 			message = "アカウントの新規登録が完了しました";
 			request.setAttribute("message", message);
