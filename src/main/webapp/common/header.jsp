@@ -74,9 +74,9 @@ main {
 
 .btn-success {
     background-color: #bcbcbc;
-    border-color: #bcbcbc;
+    border-color: #000000;
     color: #000000;
-    border-radius: 10px !important; 
+    border-radius: 0px !important; 
     font-weight: bold;
 }
 
@@ -88,9 +88,9 @@ main {
 
 .btn-del {
     background-color: #bcbcbc;
-    border-color: #bcbcbc;
+    border-color: #000000;
     color: #CC0000;
-    border-radius: 10px !important; 
+    border-radius: 0px !important; 
     font-weight: bold;
 }
 
@@ -115,7 +115,7 @@ main {
 
 .user-name strong{
 	color: #ff8c00;
-	margin-left: 400px;
+	margin-left: 300px;
 }
 
 .welcome-text{
@@ -125,7 +125,7 @@ main {
 }
 
 .user strong{
-	color: #C2185B;
+	color: #fd7e00;
 }
 
 .lead {

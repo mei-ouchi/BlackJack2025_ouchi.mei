@@ -28,7 +28,7 @@
 					<a class="btn btn-success" href="RankingServlet">あなたの戦績</a>
 				</li>
 				<li class="nav-item">
-					<a class="btn btn-del" href="#" onclick="return confirmDelete()">アカウントの削除</a>
+					<a class="btn btn-del" href="#" onclick="return checkDelete()">アカウントの削除</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link text-mute" href="LoginServlet">ログアウト</a>
@@ -41,12 +41,14 @@
 </nav>
 
 <script type="text/javascript">
-	function confirmDelete(){
+	function checkDelete(){
 		if(confirm("アカウント情報は復元することはできません。本当にアカウントを削除しますか？")){
 			window.location.href = "UserServlet?action=delete";
 			return true;
-			}else false;
+			}else {
+				return false;
 		}
+	}
 </script>
 
 

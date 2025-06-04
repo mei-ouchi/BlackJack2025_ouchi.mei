@@ -40,7 +40,7 @@ public class UserServlet extends HttpServlet {
 			}
 			
 			if(userDao.userIdExist(userId)) {
-				throw new BlackJackException("このIDはすでに使用されています");
+				throw new BlackJackException("このユーザIDはすでに使用されています");
 				
 			}
 			

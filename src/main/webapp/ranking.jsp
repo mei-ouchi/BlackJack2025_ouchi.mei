@@ -53,14 +53,13 @@
 			}
 			%>
 			
-			<p class="user"><strong><%=userStats.getUserName() %>さん</strong></p>
+			<p class="user"><strong><%=userStats.getUserName() %></strong>さん</p>
 			<p><strong>総プレイ回数：</strong><%=totalGame %></p>
 			<p><strong>勝利数：</strong><%=wins %></p>
 			<p><strong>敗北数：</strong><%=loses %></p>
 			<p><strong>引き分け数：</strong><%=draws %></p>
 			<p><strong>勝率:</strong> <%= df.format(winRate) %>%</p>
 			<p><strong>現在の保有チップ数：</strong><%=nowChip %></p>
-			<p><strong></strong></p>
 			
 			<%}else{%> 
 				<p class="text-center">あなたの戦績はまだありません</p>
@@ -74,7 +73,7 @@
 			List<User> topUserList = (List<User>)request.getAttribute("topUserStatsList");
 			DecimalFormat df_top = new DecimalFormat("#.##");
 			
-			if(topUserList != null && topUserList.isEmpty()){
+			if(topUserList != null && !topUserList.isEmpty()){
 				for(int i=0; i<topUserList.size(); i++){
 					User topUserStats= topUserList.get(i);
 					
@@ -107,7 +106,7 @@
 			%>
 			
 			<div class="col-12 text-center">
-				<p class="text-white">not person</p>
+				<p class="text-white">現在表示できるユーザはいません</p>
 			</div>
 			<%	
 			}

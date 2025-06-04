@@ -31,7 +31,7 @@
 	
 	<div class="welcome-session">
 		<h1 class="display-4"><span class="welcome-text">ようこそ！</span></h1>
-			<p class="lead text-white">ログイン、または新規アカウント登録をしてください！</p>
+			<p class="lead text-white">ログイン、または新規アカウント登録をしてから遊びましょう！</p>
 			<p class="loginlink"><a href="login.jsp">ログインページへ</a></p>
 	</div>
 	
