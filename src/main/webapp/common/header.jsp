@@ -7,9 +7,15 @@
 <style>
 
 body {
+	overflow-x: hidden;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	padding-top: 100px;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    box-sizing: border-box;
     
 	background-image: url('image/1624203006_wXuRKy.jpg');
 	background-size: cover;

@@ -21,7 +21,10 @@
 	</div>
 	
 	<div class="action-buttons d-flex flex-column align-items-center">
-		<button type="button" class="btn btn-start btn-lg" onclick="location.href='GameServlet'">Game Start!</button>
+		<form action="GameServlet" method="post">
+			<input type="hidden" name="action" value="start">
+			<button type="submit" class="btn btn-start btn-lg">Game Start!</button>
+		</form>
 	</div>
 	
 	

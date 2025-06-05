@@ -47,7 +47,7 @@ public class GameSessionDao extends BaseDao{
 	
 	//ゲームセッション情報の更新
 	public void updateGameSession(GameSession gameSession)  throws BlackJackException{
-		String sql = "UPDAE game_session SET end_chip=? WHERE session_id=?";
+		String sql = "UPDATE game_session SET end_chip=? WHERE session_id=?";
 		try(Connection con = getConnection();
 				PreparedStatement ps = con.prepareStatement(sql)){
 			ps.setInt(1, gameSession.getEndChip());

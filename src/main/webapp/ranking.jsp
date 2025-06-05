@@ -33,7 +33,7 @@
 	<main>
 	
 	<div class="welcome-session">
-		<h1 class="display-4 text-center text-white">あなたの戦績</h1>
+		<h1 class="display-4 text-center text-warning">あなたの戦績</h1>
 		<div class="card shadow p-4 mb-5">
 			<div class="card-body">
 			<%
@@ -67,7 +67,7 @@
 			</div>
 		</div>
 	
-		<h1 class="welcome-session text-white">勝率ランキングTop5</h1>
+		<h1 class="welcome-session text-center text-warning">勝率ランキングTop5</h1>
 		<div class="row justify-content-center">
 			<%
 			List<User> topUserList = (List<User>)request.getAttribute("topUserStatsList");
@@ -90,9 +90,9 @@
 				<div class="card shadow ranking-card">
 					<div class="card-bodytext-center">
 					<h5 class="card-title ranking-position"><%=i+1 %>位</h5>
-					<h6 class="card-subtitle mb-2 text-muted"><%=topUserStats.getUserName() %>さん</h6>
+					<h6 class="card-subtitle mb-2"><p class="user"><strong><%=topUserStats.getUserName() %></strong>さん<p></h6>
 					<p class="card-text">
-						勝率：<strong class="text-primary"><%=df_top.format(topUserWinRate) %>%</strong><br>
+						勝率：<strong><%=df_top.format(topUserWinRate) %>%</strong><br>
 						総プレイ回数：<%=topUserTotalGame %><br>
 						勝利数：<%=topUserWins %><br>
 						保有チップ数：<%=topUserNowChip %>

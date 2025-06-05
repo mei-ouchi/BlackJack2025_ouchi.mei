@@ -115,7 +115,7 @@ public class UserDao extends BaseDao{
 				PreparedStatement ps = con.prepareStatement(
 						"SELECT user_id, user_name, total_game, wins, loses, draws, now_chip,"
 						+"CASE WHEN total_game>0 THEN (CAST(wins AS DECIMAL) / total_game) ELSE 0 END AS win_rate "
-						+ "FROM user"
+						+ "FROM user "
 						+ "ORDER BY win_rate DESC, wins DESC, total_game ASC LIMIT ?")){
 
 			ps.setInt(1, limit);
@@ -159,7 +159,7 @@ public class UserDao extends BaseDao{
 	
 	
 	//ユーザの戦績更新
-	public void uodateUserStats(String userId, int totalGame, int wins, int loses, int draws, int nowChip) throws BlackJackException{
+	public void updateUserStats(String userId, int totalGame, int wins, int loses, int draws, int nowChip) throws BlackJackException{
 		try(Connection con = getConnection();
 				PreparedStatement ps = con.prepareStatement("UPDATE user SET total_game=?, wins=?, loses=?, draws=?, now_chip=? WHERE user_id=?")) {
 			ps.setInt(1, totalGame);

@@ -17,7 +17,7 @@ public abstract class PlayerBase {
 	}
 	
 	//手札リストの取得
-	public List<Card> getHandcard(){
+	public List<Card> getHandCard(){
 		return new ArrayList<>(handCard);
 	}
 	
