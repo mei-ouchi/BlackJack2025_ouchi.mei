@@ -33,7 +33,7 @@
 	<main>
 	
 	<div class="welcome-session">
-		<h1 class="display-4 text-center text-warning">あなたの戦績</h1>
+		<h1 class="display-4 text-center text-warning mb-4"><p class="user"><strong>あなたの戦績</strong></h1>
 		<div class="card shadow p-4 mb-5">
 			<div class="card-body">
 			<%
@@ -67,52 +67,57 @@
 			</div>
 		</div>
 	
-		<h1 class="welcome-session text-center text-warning">勝率ランキングTop5</h1>
+		<h1 class="welcome-session text-center mb-4"><p class="user"><strong>勝率ランキングTop5</strong></h1>
 		<div class="row justify-content-center">
-			<%
-			List<User> topUserList = (List<User>)request.getAttribute("topUserStatsList");
-			DecimalFormat df_top = new DecimalFormat("#.##");
+			<div class="col-12 col-md-12 col-lg-12">
+				<div class="table-responsive">
+					<table class="table table-dark bg-white table-striped table-hover text-dark">
+						<thead class="table-head">
+							<tr class="text-center">
+								<th scope="col">順位</th>
+								<th scope="col">ユーザ名</th>
+								<th scope="col">勝率</th>
+								<th scope="col">保有チップ数</th>
+							</tr>
+						</thead>
+						<tbody>
+						<%
+							List<User> topUserList = (List<User>)request.getAttribute("topUserStatsList");
+							DecimalFormat df_top = new DecimalFormat("#.##");
 			
-			if(topUserList != null && !topUserList.isEmpty()){
-				for(int i=0; i<topUserList.size(); i++){
-					User topUserStats= topUserList.get(i);
+							if(topUserList != null && !topUserList.isEmpty()){
+							for(int i=0; i<topUserList.size(); i++){
+							User topUserStats= topUserList.get(i);
 					
-					int topUserTotalGame = topUserStats.getTotalGame();
-					int topUserWins = topUserStats.getWins();
-					int topUserNowChip = topUserStats.getNowChip();
+							int topUserTotalGame = topUserStats.getTotalGame();
+							int topUserWins = topUserStats.getWins();
+							int topUserNowChip = topUserStats.getNowChip();
 					
-					double topUserWinRate = 0.0;
-					if (topUserTotalGame > 0) {
-					topUserWinRate = (double) topUserWins / topUserTotalGame * 100;
-			}
-			%>
-			<div class="col-md-4 col-sm-6 mb-4">
-				<div class="card shadow ranking-card">
-					<div class="card-bodytext-center">
-					<h5 class="card-title ranking-position"><%=i+1 %>位</h5>
-					<h6 class="card-subtitle mb-2"><p class="user"><strong><%=topUserStats.getUserName() %></strong>さん<p></h6>
-					<p class="card-text">
-						勝率：<strong><%=df_top.format(topUserWinRate) %>%</strong><br>
-						総プレイ回数：<%=topUserTotalGame %><br>
-						勝利数：<%=topUserWins %><br>
-						保有チップ数：<%=topUserNowChip %>
-					</p>
+							double topUserWinRate = 0.0;
+							if (topUserTotalGame > 0) {
+							topUserWinRate = (double) topUserWins / topUserTotalGame * 100;
+							}
+							%>
+							
+							<tr class="text-center">
+								<td><strong><%=i+1 %>位</strong></td>
+								<td><p class="user"><strong><%=topUserStats.getUserName() %></strong>さん<p></td>
+								<td><%=df_top.format(topUserWinRate) %>%</td>
+								<td><%=topUserNowChip %></td>
+							</tr>
+            				<%
+								}
+							}else{
+							%>
+							<tr>
+								<td colspan="6" class="text-center text-whote">現在表示できるユーザはいません</td>
+							</tr>
+							<%} %>
+						</tbody>
+					</table>
 					</div>
 				</div>
 			</div>
-            <%
-				}
-			}else{
-			%>
-			
-			<div class="col-12 text-center">
-				<p class="text-white">現在表示できるユーザはいません</p>
-			</div>
-			<%	
-			}
-			%>
-			</div>
-		</div>
 	</main>
 	<jsp:include page="common/footer.jsp"/>
 	

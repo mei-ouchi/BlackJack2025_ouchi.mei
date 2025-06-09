@@ -36,16 +36,30 @@ public class UserServlet extends HttpServlet {
 				|| loginPassword ==null || loginPassword.isEmpty()
 				|| !loginPassword.equals(confirmPassword)
 				) {
-				throw new BlackJackException("すべてのユーザ情報が入力されていないか、パスワードが一致しません");
+				message="パスワードが一致しません";
+				error="true";
+				nextPage="NewAccount.jsp";
+				request.setAttribute("message", message);
+				request.setAttribute("error", "true");
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher(nextPage);
+				requestDispatcher.forward(request, response);
+				return;
 			}
 			
 			if(userDao.userIdExist(userId)) {
-				throw new BlackJackException("このユーザIDはすでに使用されています");
-				
+				message="このIDは既に使用されています";
+				error="true";
+				nextPage="NewAccount.jsp";
+				request.setAttribute("message", message);
+				request.setAttribute("error", "true");
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher(nextPage);
+				requestDispatcher.forward(request, response);
+				return;
 			}
 			
 			userDao.registerUser(userId, userName, loginPassword);
 			message = "アカウントの新規登録が完了しました";
+			error="";
 			request.setAttribute("message", message);
 			nextPage = "login.jsp";
 			 
@@ -56,11 +70,12 @@ public class UserServlet extends HttpServlet {
 		}catch (Exception e) {
 			e.printStackTrace();
 			message = "アカウント登録に失敗しました";
+			error="true";
 			nextPage = "NewAccount.jsp";
 		}
 		
 		request.setAttribute("message", message);
-		request.setAttribute("error", "true");
+		request.setAttribute("error", error);
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(nextPage);
 		requestDispatcher.forward(request, response);
@@ -100,7 +115,8 @@ public class UserServlet extends HttpServlet {
 		
 		if("delete".equals(action)) {
 			 if(user == null) {
-				 throw new BlackJackException("削除するユーザ情報は見つかりませんでした");
+				 message="削除するユーザ情報は見つかりませんでした";
+				 error="true";
 			 }else{
 				 userDao.deleteUser(user.getUserId());
 				 
@@ -109,7 +125,8 @@ public class UserServlet extends HttpServlet {
 				 nextPage = "login.jsp";
 			 }
 		}else {
-			throw new BlackJackException("この操作はできません");
+			message="この操作はできません";
+			error="true";
 		}
 		}catch(BlackJackException e){
 			e.printStackTrace();

@@ -57,11 +57,11 @@ public class RankingServlet extends HttpServlet {
 			error="true";
 		}catch(Exception e) {
 			e.printStackTrace();
-			message="エラーが発生したため、戦績が表示できません";
+			message="エラーが発生したため、勝率ランキングが表示できません";
 			error="true";
 		}
 		request.setAttribute("message", message);
-		request.setAttribute("error", "true");
+		request.setAttribute("error", error);
 		RequestDispatcher rd = request.getRequestDispatcher(nextPage);
 		rd.forward(request, response);
 	}

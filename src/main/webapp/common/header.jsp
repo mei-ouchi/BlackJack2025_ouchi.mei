@@ -17,6 +17,7 @@ body {
     min-height: 100vh;
     box-sizing: border-box;
     
+    
 	background-image: url('image/1624203006_wXuRKy.jpg');
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -31,7 +32,6 @@ main {
     justify-content: center;
     padding: 20px 0;
 }
-
 
 .welcome-session h1{
 	font-family: 'M PLUS Rounded 1c', sans-serif;
@@ -141,6 +141,11 @@ main {
 .loginlink{
 	margin-left: 700px;
 }
+
+.table-head{
+	background-color: #FF8856;
+}
+
 
 </style>
 
