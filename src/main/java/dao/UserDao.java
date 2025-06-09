@@ -73,7 +73,7 @@ public class UserDao extends BaseDao{
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
-			throw new BlackJackException("処理中にエラーが発生しました");
+			throw new BlackJackException("IDチェック処理中にエラーが発生しました");
 		}
 			return false;
 	}

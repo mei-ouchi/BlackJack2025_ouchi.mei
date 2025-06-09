@@ -27,7 +27,7 @@ public class GameSessionDao extends BaseDao{
 			int raw = ps.executeUpdate();
 			
 			if(raw == 0) {
-				throw new BlackJackException("ゲームセッションの作成に失敗しました");
+				throw new BlackJackException("ゲームを開始できませんでした");
 			}
 			//自動生成IDの取得
 			try(ResultSet rs = ps.getGeneratedKeys()) {
@@ -35,12 +35,12 @@ public class GameSessionDao extends BaseDao{
 					generatedId = rs.getInt(1);
 					gameSession.setSessionId(generatedId);
 				}else {
-					throw new BlackJackException("セッションIDの取得に失敗しました");
+					throw new BlackJackException("ゲームの情報を取得できませんでした");
 				}
 			}
 		}catch(SQLException e) {
 			 e.printStackTrace();
-			 throw new BlackJackException("ゲームセッションの作成時にエラーが発生しました");
+			 throw new BlackJackException("ゲーム開始前にエラーが発生しました");
 		}
 		return generatedId;
 	}
@@ -55,11 +55,11 @@ public class GameSessionDao extends BaseDao{
 			
 			int raw = ps.executeUpdate();
 			if(raw == 0) {
-				throw new BlackJackException("このセッションIDは見つかりませんでした");
+				throw new BlackJackException("ゲーム結果の更新に失敗しました");
 			}
 		}catch(SQLException e) {
 			 e.printStackTrace();
-			 throw new BlackJackException("ゲームセッションの更新に失敗しました");
+			 throw new BlackJackException("ゲーム結果の更新に失敗しました");
 		}
 	}
 	
@@ -83,7 +83,7 @@ public class GameSessionDao extends BaseDao{
 			}
 		}catch(SQLException e) {
 			 e.printStackTrace();
-			 throw new BlackJackException("ゲームセッションの取得に失敗しました");
+			 throw new BlackJackException("ゲームの情報を取得できませんでした");
 		}
 		return gameSession;
 	}
@@ -109,7 +109,7 @@ public class GameSessionDao extends BaseDao{
 			}
 		}catch(SQLException e) {
 			 e.printStackTrace();
-			 throw new BlackJackException("ゲームセッションリストの取得に失敗しました");
+			 throw new BlackJackException("ゲームの情報を取得できませんでした");
 		}
 		return gameSessionList;
 	}

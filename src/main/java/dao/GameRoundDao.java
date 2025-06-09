@@ -34,7 +34,7 @@ public class GameRoundDao extends BaseDao{
 			int raw = ps.executeUpdate();
 			
 			if(raw == 0) {
-				throw new BlackJackException("ゲームラウンドの作成に失敗しました");
+				throw new BlackJackException("ゲームを開始することができませんでした");
 			}
 			//自動生成IDの取得
 			try(ResultSet rs = ps.getGeneratedKeys()) {
@@ -42,12 +42,12 @@ public class GameRoundDao extends BaseDao{
 					generatedId = rs.getInt(1);
 					gameRound.setRoundId(generatedId);
 				}else {
-					throw new BlackJackException("ラウンドIDの取得に失敗しました");
+					throw new BlackJackException("ゲームの情報を取得できませんでした");
 				}
 			}
 		}catch(SQLException e) {
 			 e.printStackTrace();
-			 throw new BlackJackException("ゲームラウンドの作成時にエラーが発生しました", e);
+			 throw new BlackJackException("ゲーム開始前にエラーが発生しました", e);
 		}
 		return generatedId;
 	}
@@ -82,7 +82,7 @@ public class GameRoundDao extends BaseDao{
 			}
 		}catch(SQLException e) {
 			 e.printStackTrace();
-			 throw new BlackJackException("ゲームラウンドリストの取得に失敗しました", e);
+			 throw new BlackJackException("ゲームの情報を取得できませんでした", e);
 		}
 		return gameRoundList;
 	}
@@ -116,7 +116,7 @@ public class GameRoundDao extends BaseDao{
 			}
 		}catch(SQLException e) {
 			 e.printStackTrace();
-			 throw new BlackJackException("ゲームラウンドの取得に失敗しました", e);
+			 throw new BlackJackException("ゲーム情報の取得に失敗しました", e);
 		}
 		return gameRound;
 	}
@@ -141,11 +141,11 @@ public class GameRoundDao extends BaseDao{
 			int raw = ps.executeUpdate();
 			
 			if(raw == 0) {
-				throw new BlackJackException("ゲームラウンドの更新に失敗しました");
+				throw new BlackJackException("ゲーム結果の更新に失敗しました");
 			}
 		}catch(SQLException e) {
 			 e.printStackTrace();
-			 throw new BlackJackException("ゲームラウンド更新中にエラーが発生しました", e);
+			 throw new BlackJackException("ゲーム結果の更新中にエラーが発生しました", e);
 		}
 	}
 	
@@ -160,11 +160,11 @@ public class GameRoundDao extends BaseDao{
 			int raw = ps.executeUpdate();
 			
 			if(raw == 0) {
-				throw new BlackJackException("ゲームラウンドの削除に失敗しました");
+				throw new BlackJackException("ゲームの結果削除に失敗しました");
 			}
 		}catch(SQLException e) {
 			 e.printStackTrace();
-			 throw new BlackJackException("ゲームラウンド削除中にエラーが発生しました", e);
+			 throw new BlackJackException("ゲームの結果削除中にエラーが発生しました", e);
 		}
 	}
 }	
