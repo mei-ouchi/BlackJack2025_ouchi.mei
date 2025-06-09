@@ -9,23 +9,23 @@ public class GameRound {
 		PLAYER_BUST("PLAYER_BUST"),
 		DEALER_BUST("DEALER_BUST");
 		
-		private final String db;
+		private final String dbValue;
 		
-		GameResult(String db){
-			this.db=db;
+		GameResult(String dbValue){
+			this.dbValue=dbValue;
 		}
 		
 		public String getDb() {
-			return db;
+			return dbValue;
 		}
 		
-		public static GameResult fromDbValue(String db) {
+		public static GameResult fromDbValue(String dbValue) {
 			for(GameResult result : GameResult.values()){
-				if(result.getDb().equals(db)) {
+				if(result.getDb().equals(dbValue)) {
 					return result;
 				}
 			}
-			throw new IllegalArgumentException("対応する値が見つかりません："+db);
+			throw new IllegalArgumentException("対応する値が見つかりません："+dbValue);
 		}
 	}
 	

@@ -100,6 +100,17 @@ public class GameServlet extends HttpServlet {
 					return;
 				}
 				
+				if(gameSession == null) {
+					message="ゲームを開始してください";
+					error="true";
+					request.setAttribute("message", message);
+					request.setAttribute("error", error);
+					session.removeAttribute("betChip");
+					RequestDispatcher rd = request.getRequestDispatcher(nextPage);
+					rd.forward(request, response);
+					return;
+				}
+				
 				betChip = betAmount;
 				session.setAttribute("betChip", betChip);
 				user.setNowChip(user.getNowChip()-betChip);
@@ -128,11 +139,12 @@ public class GameServlet extends HttpServlet {
 			
 			//プレイヤーがカードを引く
 			}else if("hit".equals(action)) {
-				if(player == null || deck == null) {
+				if(player == null || deck == null || dealer ==null ||gameSession == null || betChip == null) {
 					message="ゲームを開始できません";
 					error="true";
 					request.setAttribute("message", message);
-					request.setAttribute("error", "true");
+					request.setAttribute("error", error);
+					session.setAttribute("roundEnd", true);
 					RequestDispatcher rd = request.getRequestDispatcher(nextPage);
 					rd.forward(request, response);
 					return;
@@ -148,10 +160,12 @@ public class GameServlet extends HttpServlet {
 			
 			//手札の確定
 			}else if("stand".equals(action)) {
-				if(player == null || deck == null) {
+				if(player == null || deck == null || dealer == null || gameSession == null || betChip == null) {
 					message="ゲームを開始できません";
-					error="true";request.setAttribute("message", message);
-					request.setAttribute("error", "true");
+					error="true";
+					request.setAttribute("message", message);
+					request.setAttribute("error", error);
+					session.setAttribute("roundEnd", true);
 					RequestDispatcher rd = request.getRequestDispatcher(nextPage);
 					rd.forward(request, response);
 					return;
@@ -331,7 +345,14 @@ public class GameServlet extends HttpServlet {
 			return;
 		}
 		
-		if(session.getAttribute("player") == null || session.getAttribute("dealer") == null) {
+		if(session.getAttribute("player") == null || session.getAttribute("dealer") == null || session.getAttribute("gameSession") == null || session.getAttribute("deck") == null) {
+			request.setAttribute("message", "ゲームを開始してください");
+			request.setAttribute("error", "false");
+			RequestDispatcher rd = request.getRequestDispatcher("game_top.jsp");
+			rd.forward(request, response);
+			return;
+		}
+			
 			try {
 				UserDao userDao =new UserDao();
 				user = userDao.getUserStats(user.getUserId());
@@ -344,8 +365,7 @@ public class GameServlet extends HttpServlet {
 				request.setAttribute("message", "システムエラーが発生しました");
 				request.setAttribute("error", "true");
 			}
-		}
-		RequestDispatcher rd = request.getRequestDispatcher("game.jsp");
-		rd.forward(request, response);
+			RequestDispatcher rd = request.getRequestDispatcher("game.jsp");
+			rd.forward(request, response);
 	}
 }
