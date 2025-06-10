@@ -9,7 +9,7 @@
 	
 	<main>
 		<div class="login-form-container">
-		<h2 class="login-heading text-center text-white my-4">ログイン</h2>
+		<h2 class="login-heading text-center text-dark my-4">ログイン</h2>
 		
 		<%
 			String message = (String)request.getAttribute("message");
@@ -47,12 +47,12 @@
 				</div>
 				<input type="password" id="loginPassword" name="password" class="form-control" required>
 			</div>
-			<button class="btn btn-lg btn-primary btn-block btn-login font-weight-bold mb-2" type="submit">
+			<button class="btn btn-lg btn-orange btn-block btn-login font-weight-bold mb-2" type="submit">
 				ログイン
 			</button>
 			</form>
 			<div class="text-center mt-3">
-                <button type="button" class="btn btn-secondary btn-block" onclick="location.href='NewAccount.jsp'">新規アカウント登録はこちら</button>
+                <button type="button" class="btn btn-lightorange btn-block" onclick="location.href='NewAccount.jsp'">新規アカウント登録はこちら</button>
 			</div>
 		</div>
 	</main>

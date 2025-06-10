@@ -8,7 +8,7 @@
 	
 	<main>
 		<div class="login-form-container">
-		<h2 class="register-heading text-center text-white my-4">新規アカウント登録</h2>
+		<h2 class="register-heading text-center text-dark my-4">新規アカウント登録</h2>
 		
 		<%
 			String message = (String)request.getAttribute("message");
@@ -52,11 +52,11 @@
 				<input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required>
 			</div>
 			
-			<button type="submit" class="btn btn-primary btn-block">アカウント作成</button>
+			<button type="submit" class="btn btn-orange btn-block">アカウント作成</button>
 		</form>
 		<div>
 		<div class="text-center mt-3">
-		<button type="button" class="btn btn-secondary btn-block" onclick="location.href='login.jsp'">ログインはこちら</button>
+		<button type="button" class="btn btn-lightorange btn-block" onclick="location.href='login.jsp'">ログインはこちら</button>
 		</div>
 		</div>
 	</main>

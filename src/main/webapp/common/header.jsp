@@ -18,7 +18,7 @@ body {
     box-sizing: border-box;
     
     
-	background-image: url('image/1624203006_wXuRKy.jpg');
+	background-image: url('image/trump0439.png');
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center center;
@@ -36,13 +36,11 @@ main {
 .welcome-session h1{
 	font-family: 'M PLUS Rounded 1c', sans-serif;
     font-weight: 700;
-    color: #333;
 }
 
 .welcome-session p{
 	font-family: 'M PLUS Rounded 1c', sans-serif;
     font-weight: 500;
-    color: #333;
 }
 
 .login-heading, .register-heading {
@@ -52,7 +50,7 @@ main {
     margin-bottom: 1.5rem !important;
 }
 
-.btn-primary {
+.btn-orange {
     background-color: #fd7e00;
     border-color: #fd7e00;
     color: #FFFFFF;
@@ -60,25 +58,25 @@ main {
     font-weight: bold; 
 }
 
-.btn-primary:hover {
+.btn-orange:hover {
     background-color: #ffa965; 
     border-color: #ffa965;
 }
 
-.btn-secondary {
+.btn-lightorange {
     background-color: #ffa965;
     border-color: #ffa965;
     color: #ffffff;
     border-radius: 10px !important;
 }
 
-.btn-secondary:hover {
+.btn-lightorange:hover {
     background-color: #ffbf8b;
     color: #ffffff;
     border-color: #ffbf8b;
 }
 
-.btn-success {
+.btn-gray {
     background-color: #bcbcbc;
     border-color: #000000;
     color: #000000;
@@ -86,7 +84,7 @@ main {
     font-weight: bold;
 }
 
-.btn-success:hover {
+.btn-gray:hover {
     background-color: #f5f5f5; 
     border-color: #f5f5f5;
     color: #333333;
@@ -121,13 +119,13 @@ main {
 
 .user-name strong{
 	color: #ff8c00;
-	margin-left: 300px;
+	margin-left: 50px;
 }
 
 .welcome-text{
 	font-size: 1.5em;
 	color: #FFFFFF;
-	margin-left: 300px;
+	margin-left: 50px;
 }
 
 .user strong{
@@ -135,11 +133,11 @@ main {
 }
 
 .lead {
-	margin-left: 300px;
+	margin-left: 50px;
 }
 
 .loginlink{
-	margin-left: 700px;
+	margin-left: 400px;
 }
 
 .table-head{

@@ -65,11 +65,11 @@ public class UserServlet extends HttpServlet {
 			 
 		}catch(BlackJackException e) {
 			e.printStackTrace();
-			message = e.getMessage();
+			message = "アカウント登録に失敗しました。このユーザ名は既に使用されている可能性があります。";
 			nextPage = "NewAccount.jsp";
 		}catch (Exception e) {
 			e.printStackTrace();
-			message = "アカウント登録に失敗しました";
+			message = "アカウント登録に失敗しました2";
 			error="true";
 			nextPage = "NewAccount.jsp";
 		}

@@ -28,10 +28,6 @@ public class UserDao extends BaseDao{
 					user = new User(rs.getString("user_id"), rs.getString("user_name"), rs.getString("password"), rs.getInt("total_game"), rs.getInt("wins"), rs.getInt("loses"),  rs.getInt("draws"), rs.getInt("now_chip"));
 				}
 			}
-			
-			if(user == null) {
-				throw new BlackJackException("アカウントが未登録、または、入力した情報が間違って間違っています");
-			}
 		}catch(SQLException e) {
 			e.printStackTrace(); 
 			throw new BlackJackException("ログイン処理中にエラーが発生しました");

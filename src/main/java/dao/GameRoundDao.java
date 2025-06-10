@@ -31,23 +31,18 @@ public class GameRoundDao extends BaseDao{
 			ps.setInt(9, gameRound.getPlayerCardIndex());
 			ps.setString(10, gameRound.getGameResult().getDb());
 			
-			int raw = ps.executeUpdate();
+			ps.executeUpdate();
 			
-			if(raw == 0) {
-				throw new BlackJackException("ゲームを開始することができませんでした");
-			}
 			//自動生成IDの取得
 			try(ResultSet rs = ps.getGeneratedKeys()) {
 				if(rs.next()) {
 					generatedId = rs.getInt(1);
 					gameRound.setRoundId(generatedId);
-				}else {
-					throw new BlackJackException("ゲームの情報を取得できませんでした");
 				}
 			}
 		}catch(SQLException e) {
 			 e.printStackTrace();
-			 throw new BlackJackException("ゲーム開始前にエラーが発生しました", e);
+			 throw new BlackJackException("ゲーム開始処理中にエラーが発生しました", e);
 		}
 		return generatedId;
 	}
@@ -69,7 +64,7 @@ public class GameRoundDao extends BaseDao{
 						rs.getInt("round_id"),
 						rs.getInt("session_id"),
 						rs.getInt("round_number"),
-						rs.getString("palyer_card"),
+						rs.getString("player_card"),
 						rs.getString("dealer_card"),
 						rs.getInt("player_score"),
 						rs.getInt("dealer_score"),
@@ -123,7 +118,7 @@ public class GameRoundDao extends BaseDao{
 	
 	//ゲームラウンド情報の更新
 	public void UpdateGameRound(GameRound gameRound) throws BlackJackException{
-		String sql = "UPDATE game_round SET session_id=?, round_number=?, player_card=?, dealer_card=?, player_score=?, dealer_score=?, bet_chip=?, chip_change=?, game_result=? WHERE round_id=?" ;
+		String sql = "UPDATE game_round SET session_id=?, round_number=?, player_card=?, dealer_card=?, player_score=?, dealer_score=?, bet_chip=?, chip_change=?, player_card_index=?, game_result=? WHERE round_id=?" ;
 		
 		try(Connection con = getConnection();
 				PreparedStatement ps = con.prepareStatement(sql)){
@@ -137,12 +132,10 @@ public class GameRoundDao extends BaseDao{
 			ps.setInt(8, gameRound.getChipChange());
 			ps.setInt(9, gameRound.getPlayerCardIndex());
 			ps.setString(10, gameRound.getGameResult().getDb());
+			ps.setInt(11, gameRound.getRoundId());
 			
-			int raw = ps.executeUpdate();
+			ps.executeUpdate();
 			
-			if(raw == 0) {
-				throw new BlackJackException("ゲーム結果の更新に失敗しました");
-			}
 		}catch(SQLException e) {
 			 e.printStackTrace();
 			 throw new BlackJackException("ゲーム結果の更新中にエラーが発生しました", e);
@@ -157,11 +150,8 @@ public class GameRoundDao extends BaseDao{
 				PreparedStatement ps = con.prepareStatement(sql)){
 			ps.setInt(1, roundId);
 			
-			int raw = ps.executeUpdate();
+			ps.executeUpdate();
 			
-			if(raw == 0) {
-				throw new BlackJackException("ゲームの結果削除に失敗しました");
-			}
 		}catch(SQLException e) {
 			 e.printStackTrace();
 			 throw new BlackJackException("ゲームの結果削除中にエラーが発生しました", e);

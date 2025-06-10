@@ -15,9 +15,9 @@
 	%>
 	
 	<div class="welcome-session">
-		<h1 class="display-4"><span class="welcome-text">ようこそ！</span>
-			<p class="user-name text-white"><strong><%= user.getUserName() %></strong>さん</p></h1>
-			<p class="lead text-white">一緒にブラックジャックをプレイしましょう！</p>
+		<h1 class="display-4"><span class="welcome-text text-dark">ようこそ！</span>
+			<p class="user-name text-dark"><strong><%= user.getUserName() %></strong>さん</p></h1>
+			<p class="lead text-dark">一緒にブラックジャックをプレイしましょう！</p>
 	</div>
 	
 	<div class="action-buttons d-flex flex-column align-items-center">
@@ -33,8 +33,8 @@
 	%>
 	
 	<div class="welcome-session">
-		<h1 class="display-4"><span class="welcome-text">ようこそ！</span></h1>
-			<p class="lead text-white">ログイン、または新規アカウント登録をしてから遊びましょう！</p>
+		<h1 class="display-4"><span class="welcome-text text-dark">ようこそ！</span></h1>
+			<p class="lead text-dark">ログイン、または新規アカウント登録をしてから遊びましょう！</p>
 			<p class="loginlink"><a href="login.jsp">ログインページへ</a></p>
 	</div>
 	

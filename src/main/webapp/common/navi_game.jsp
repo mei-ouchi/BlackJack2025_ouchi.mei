@@ -22,10 +22,10 @@
 		</div>
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item">
-					<a class="btn btn-success" href="game_top.jsp">トップへ戻る</a>
+					<a class="btn btn-gray" href="game_top.jsp">トップへ戻る</a>
 				</li>
 				<li class="nav-item">
-					<a class="btn btn-success" href="RankingServlet">あなたの戦績</a>
+					<a class="btn btn-gray" href="RankingServlet">あなたの戦績</a>
 				</li>
 				<li class="nav-item">
 					<a class="btn btn-del" href="#" onclick="return checkDelete()">アカウントの削除</a>

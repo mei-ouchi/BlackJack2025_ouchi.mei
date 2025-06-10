@@ -88,7 +88,7 @@ public class GameServlet extends HttpServlet {
 				
 				int betAmount = Integer.parseInt(betAmountString);
 				
-				if(betAmount < 0 || betAmount == 0) {
+				if(betAmount <= 0 ) {
 					message="チップを賭けてください";
 					error="true";
 					nextPage="game.jsp";
@@ -155,7 +155,6 @@ public class GameServlet extends HttpServlet {
 				if(player.bust()) {
 					roundGameEnd(session, request, user, player, dealer, betChip, GameResult.PLAYER_BUST, userDao, gameSessionDao, gameRoundDao, gameSession, roundNumber, deck);
 					session.setAttribute("roundEnd", true);
-					request.setAttribute("error", error);
 				}
 			
 			//手札の確定
@@ -176,7 +175,6 @@ public class GameServlet extends HttpServlet {
 				GameResult gameResult = whichWin(player, dealer);
 				roundGameEnd(session, request, user, player, dealer, betChip, gameResult, userDao, gameSessionDao, gameRoundDao, gameSession, roundNumber, deck);
 				session.setAttribute("roundEnd", true);
-				request.setAttribute("error", error);
 			
 			//ゲームリセット
 			}else if("reset".equals(action)) {
@@ -188,14 +186,12 @@ public class GameServlet extends HttpServlet {
 				session.removeAttribute("betChip");
 				session.removeAttribute("roundEnd");
 				session.setAttribute("message", "ゲームがリセットされました");
+				session.setAttribute("error", error);
 				nextPage = "game_top.jsp";
-				request.setAttribute("error", error);
 			}
 			
 		}catch (BlackJackException e) {
 			e.printStackTrace();
-			request.setAttribute("message", e.getMessage());
-			request.setAttribute("error", "true");
 			session.removeAttribute("player");
 			session.removeAttribute("dealer");
 			session.removeAttribute("betChip");

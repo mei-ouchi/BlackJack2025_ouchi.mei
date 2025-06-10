@@ -22,15 +22,21 @@ public class LoginServlet extends HttpServlet {
 		String userId = request.getParameter("user_id");
 		String loginPassword = request.getParameter("password");
 		String nextPage = null;
+		User user = null;
 		
 		try {
 			UserDao userDao = new UserDao();
-			User user = userDao.doLogin(userId, loginPassword);
+			user = userDao.doLogin(userId, loginPassword);
 			
-			HttpSession session = request.getSession();
-			session.setAttribute("user", user);
-			
-			nextPage="game_top.jsp";
+			if(user != null) {
+				HttpSession session = request.getSession();
+				session.setAttribute("user", user);
+				nextPage="game_top.jsp";
+			}else {
+				request.setAttribute("message", "アカウントが未登録、または入力したユーザ情報が間違っています");
+				request.setAttribute("error", "true");
+				nextPage="login.jsp";
+			}
 		}catch(BlackJackException e){
 			String message = e.getMessage();
 			request.setAttribute("message", message);

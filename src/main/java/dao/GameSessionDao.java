@@ -24,18 +24,13 @@ public class GameSessionDao extends BaseDao{
 			ps.setInt(2,gameSession.getStartChip());
 			ps.setInt(3,gameSession.getEndChip());
 			
-			int raw = ps.executeUpdate();
+			ps.executeUpdate();
 			
-			if(raw == 0) {
-				throw new BlackJackException("ゲームを開始できませんでした");
-			}
 			//自動生成IDの取得
 			try(ResultSet rs = ps.getGeneratedKeys()) {
 				if(rs.next()) {
 					generatedId = rs.getInt(1);
 					gameSession.setSessionId(generatedId);
-				}else {
-					throw new BlackJackException("ゲームの情報を取得できませんでした");
 				}
 			}
 		}catch(SQLException e) {
@@ -53,10 +48,8 @@ public class GameSessionDao extends BaseDao{
 			ps.setInt(1, gameSession.getEndChip());
 			ps.setInt(2, gameSession.getSessionId());
 			
-			int raw = ps.executeUpdate();
-			if(raw == 0) {
-				throw new BlackJackException("ゲーム結果の更新に失敗しました");
-			}
+			ps.executeUpdate();
+			
 		}catch(SQLException e) {
 			 e.printStackTrace();
 			 throw new BlackJackException("ゲーム結果の更新に失敗しました");
