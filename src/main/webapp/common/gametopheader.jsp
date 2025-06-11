@@ -18,7 +18,7 @@ body {
     box-sizing: border-box;
     
     
-	background-image: url('image/loginbg.jpg');
+	background-image: url('image/gametopbg.jpg');
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center center;

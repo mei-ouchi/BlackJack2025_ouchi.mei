@@ -88,7 +88,7 @@ public class GameServlet extends HttpServlet {
 				
 				int betAmount = Integer.parseInt(betAmountString);
 				
-				if(betAmount <= 0 ) {
+				if(betAmount == 0 ) {
 					message="チップを賭けてください";
 					error="true";
 					nextPage="game.jsp";

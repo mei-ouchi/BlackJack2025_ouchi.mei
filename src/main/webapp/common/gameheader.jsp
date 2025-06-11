@@ -18,7 +18,7 @@ body {
     box-sizing: border-box;
     
     
-	background-image: url('image/loginbg.jpg');
+	background-image: url('image/gamebg.jpg');
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center center;
@@ -119,13 +119,13 @@ main {
 
 .user-name strong{
 	color: #ff8c00;
-	margin-left: 50px;
+	margin-left: 300px;
 }
 
 .welcome-text{
 	font-size: 1.5em;
 	color: #FFFFFF;
-	margin-left: 50px;
+	margin-left: 300px;
 }
 
 .user strong{
@@ -133,11 +133,11 @@ main {
 }
 
 .lead {
-	margin-left: 50px;
+	margin-left: 300px;
 }
 
 .loginlink{
-	margin-left: 400px;
+	margin-left: 700px;
 }
 
 .table-head{

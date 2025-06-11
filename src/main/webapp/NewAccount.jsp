@@ -8,7 +8,7 @@
 	
 	<main>
 		<div class="login-form-container">
-		<h2 class="register-heading text-center text-dark my-4">新規アカウント登録</h2>
+		<h2 class="register-heading text-center text-white my-4">新規アカウント登録</h2>
 		
 		<%
 			String message = (String)request.getAttribute("message");

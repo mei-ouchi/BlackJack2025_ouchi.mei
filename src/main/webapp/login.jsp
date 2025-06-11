@@ -9,7 +9,7 @@
 	
 	<main>
 		<div class="login-form-container">
-		<h2 class="login-heading text-center text-dark my-4">ログイン</h2>
+		<h2 class="login-heading text-center text-white my-4">ログイン</h2>
 		
 		<%
 			String message = (String)request.getAttribute("message");
@@ -34,12 +34,6 @@
 					<span class="input-group-text">ユーザーID</span>
 				</div>
 				<input type="text" id="userId" name="user_id" class="form-control" required autofocus>
-			</div>
-			<div class="input-group input-group-custom">
-				<div class="input-group-prepend">
-					<span class="input-group-text">ユーザー名</span>
-				</div>
-				<input type="text" id="userName" name="user_name" class="form-control" required>
 			</div>
 			<div class="input-group input-group-custom">
 				<div class="input-group-prepend">

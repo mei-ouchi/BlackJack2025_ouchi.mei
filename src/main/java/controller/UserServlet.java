@@ -59,7 +59,6 @@ public class UserServlet extends HttpServlet {
 			
 			userDao.registerUser(userId, userName, loginPassword);
 			message = "アカウントの新規登録が完了しました";
-			error="";
 			request.setAttribute("message", message);
 			nextPage = "login.jsp";
 			 
@@ -69,7 +68,7 @@ public class UserServlet extends HttpServlet {
 			nextPage = "NewAccount.jsp";
 		}catch (Exception e) {
 			e.printStackTrace();
-			message = "アカウント登録に失敗しました2";
+			message = "アカウント登録に失敗しました";
 			error="true";
 			nextPage = "NewAccount.jsp";
 		}

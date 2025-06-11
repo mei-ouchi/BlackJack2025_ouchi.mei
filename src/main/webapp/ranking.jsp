@@ -5,7 +5,7 @@
 <%@ page import="java.text.DecimalFormat" %> 
 <!DOCTYPE html>
 <html>
-	<jsp:include page="common/header.jsp"/>
+	<jsp:include page="common/gametopheader.jsp"/>
 <body>
 	<jsp:include page="common/navi_game.jsp"/>
 	
