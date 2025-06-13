@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<style>
+@charset "UTF-8";
 
 .card-area{
 	padding: 15px;
@@ -10,16 +8,17 @@
 	flex-wrap: wrap;
 	justify-content: center;
 	align-items: flex-start;
+	flex-shrink: 0;
 }
 
 .card-item{
 	border: 1px solid #ccc;
     padding: 0px;
-    margin: 5px;
+    margin: 3px;
     background-color: white;
     color: black;
-    width: 120px;
-    height: 180px;
+    width: 70px;
+    height: 105px;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -43,13 +42,13 @@
 }
 
 .rank{
-	font-size: 3em;
+	font-size: 1.8em;
 	font-weight: bold;
 	line-height: 1;
 }
 
 .suit{
-	font-size: 5em;
+	font-size: 3em;
 	line-height: 1;
 	display: block;
 	margin-top: auto;
@@ -58,14 +57,14 @@
 
 .top-right{
 	position: absolute;
-	top: 5px;
-	right: 5px;
+	top: 2px;
+	right: 2px;
 }
 
 .bottom-left{
 	position: absolute;
-	bottom: 5px;
-	left: 5px;
+	bottom: 2px;
+	left: 2px;
 	transform: rotate(180deg);
 }
 
@@ -87,53 +86,50 @@
 
 .card-back{
 	background-color: #990000;
-	background-image:url('image/cardback.jpg');
+	background-image:url('/BlackJack/image/cardback.jpg');
 	background-size: cover;
 	border: 5px solid #fff;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: 0.8em;
+	font-size: 0.7em;
 	text-align: center;
 	line-height: normal;
 	margin-bottom: 0;
 }
 
 .card-score{
-	font-size: 1.2em;
+	font-size: 0.9em;
 	font-weight: bold;
-	margin-left: 15px;
+	margin-left: 5px;
 	align-self: flex-end;
-	margin-top: 10px;
+	margin-top: 3px;
 }
 
 .card-inner.ADesign{
-	background-image: url('image/ace.jpg');
+	background-image: url('/BlackJack/image/ace.jpg');
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-position: center;
 }
 
 .card-inner.JDesign{
-	background-image: url('image/jack.jpg');
+	background-image: url('/BlackJack/image/jack.jpg');
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-position: center;
 }
 
 .card-inner.QDesign{
-	background-image: url('image/queen.jpg');
+	background-image: url('/BlackJack/image/queen.jpg');
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-position: center;
 }
 
 .card-inner.KDesign{
-	background-image: url('image/king.jpg');
+	background-image: url('/BlackJack/image/king.jpg');
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-position: center;
 }
-
-
-</style>

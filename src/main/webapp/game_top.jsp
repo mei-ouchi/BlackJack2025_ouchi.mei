@@ -3,8 +3,14 @@
 <%@ page import="model.User" %>
 <!DOCTYPE html>
 <html>
-	<jsp:include page="common/gametopheader.jsp"/>
-<body>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+<link rel="stylesheet" href="css/common.css">
+<title>BlackJack</title>
+</head>
+
+<body background="image/gametopbg.jpg">
 	<jsp:include page="common/navi_game.jsp"/>
 	
 	<main>
@@ -23,7 +29,7 @@
 	<div class="action-buttons d-flex flex-column align-items-center">
 		<form action="GameServlet" method="post">
 			<input type="hidden" name="action" value="start">
-			<button type="submit" class="btn btn-start btn-lg">Game Start!</button>
+			<button type="submit" class="btn btn-login btn-lg">Game Start!</button>
 		</form>
 	</div>
 	

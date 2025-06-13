@@ -2,8 +2,14 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ja">
-	<jsp:include page="common/header.jsp"/>
-<body>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+<link rel="stylesheet" href="css/common.css">
+<title>BlackJack</title>
+</head>
+
+<body background="image/loginbg.jpg">
 	<jsp:include page="common/navi.jsp"/>
 	
 	<main>
@@ -52,11 +58,11 @@
 				<input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required>
 			</div>
 			
-			<button type="submit" class="btn btn-orange btn-block">アカウント作成</button>
+			<button type="submit" class="btn btn-login btn-block">アカウント作成</button>
 		</form>
 		<div>
 		<div class="text-center mt-3">
-		<button type="button" class="btn btn-lightorange btn-block" onclick="location.href='login.jsp'">ログインはこちら</button>
+		<button type="button" class="btn btn-register btn-block" onclick="location.href='login.jsp'">ログインはこちら</button>
 		</div>
 		</div>
 	</main>

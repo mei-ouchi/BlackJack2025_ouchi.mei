@@ -8,10 +8,17 @@
 <%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
-	<jsp:include page="common/gameheader.jsp"/>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/card.css">
+<title>BlackJack</title>
+</head>
+	
 <body>
 	<jsp:include page="common/navi_game.jsp"/>
-	
+	<div class="game-container">
 	
 	<%
 		String message = (String)request.getAttribute("message");
@@ -38,7 +45,7 @@
 		
 		<% if(roundNumber != null && roundNumber > 0){ %>
 		<div class="text-center">
-			<h1 class="user" mb-0><strong>ラウンド<%= roundNumber %></strong></h1>
+			<h3 class="user" mb-0><strong>ラウンド<%= roundNumber %></strong></h3>
 		</div>
 		<% } %>
 		
@@ -99,7 +106,7 @@
 			<%} %>
 			</div>
 			
-			<h3 class="card-title text-center text-white" style="margin-top: 70px;"><strong>あなたの手札</strong></h4>
+			<h3 class="card-title text-center text-white mt-5"><strong>あなたの手札</strong></h4>
 			<div class="card-area text-center">
 			<div class="d-flex flex-wrap justify-content-center">
 			<%
@@ -138,7 +145,7 @@
 					</div>
 					<div class="row justify-content-center align-items-center">
 					<div class="mt-3 mb-5 col-sm-2">
-						<button type="submit" name="action" value="bet" class="btn btn-orange btn-block">ゲーム開始</button>
+						<button type="submit" name="action" value="bet" class="btn btn-login btn-block">ゲーム開始</button>
 					</div>
 					</div>
 				</div>
@@ -147,17 +154,17 @@
 		<%}else if(roundEnd != null && !roundEnd){//ゲームラウンド中%>
 			<div class="mt-5 mb-5">
 				<form action="GameServlet" method="post" class="d-inline-block mr-2">
-					<button type="submit" name="action" value="hit" class="btn btn-orange">カードを引く</button>
+					<button type="submit" name="action" value="hit" class="btn btn-hit">カードを引く</button>
 				</form>
 				
 				<form action="GameServlet" method="post" class="d-inline-block mr-2">
-					<button type="submit" name="action" value="stand" class="btn btn-orange">確定</button>
+					<button type="submit" name="action" value="stand" class="btn btn-stand">確定</button>
 				</form>
 			</div>
 			
 		<%}else if(roundEnd != null && roundEnd){//ゲーム終了 %>
 			<form action="GameServlet" method="post" class="mb-3">
-				<div class="form-group" style="margin-top: 60px;">
+				<div class="form-group">
 				<div class="text-center mb-1">
 					<label for="nextBetAmount" class="col-form-label text-white">次のラウンドで賭けるチップ数を選んでください</label>
 				</div>
@@ -168,16 +175,15 @@
 				</div>
 				</div>
 				<div>
-				<button type="submit" name="action" value="bet" class="btn btn-orange">賭けるチップ数を選んだら、ここを押してください!<br><strong class="text-dark">－次のラウンドを開始－</strong></button>
+				<button type="submit" name="action" value="bet" class="btn btn-login">賭けるチップ数を選んだら、ここを押してください!<br><strong class="text-dark">－次のラウンドを開始－</strong></button>
 				</div>
 			</form>
 			
 			<form action="GameServlet" method="post" class="d-inline-block mr-2">
-				<button type="submit" name="action" value="reset" class="btn btn-gray mb-5" style="margin-top: 30px;">ゲーム終了</button>
+				<button type="submit" name="action" value="reset" class="btn btn-end mb-5" style="margin-top: 30px;">ゲーム終了</button>
 			</form>
 		<%} %>
 		</div>
-	
-	<jsp:include page="common/card_style.jsp"/>
+	</div>
 </body>
 </html>

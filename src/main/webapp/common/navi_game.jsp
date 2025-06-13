@@ -28,10 +28,10 @@
 					<a class="btn btn-gray" href="RankingServlet">あなたの戦績</a>
 				</li>
 				<li class="nav-item">
-					<a class="btn btn-del" href="#" onclick="return checkDelete()">アカウントの削除</a>
+					<a class="btn btn btn-gray" href="LoginServlet">ログアウト</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link text-mute" href="LoginServlet">ログアウト</a>
+					<a class="btn btn-del" href="#" onclick="return checkDelete()">アカウントの削除</a>
 				</li>
 			</ul>
 		</div>  
