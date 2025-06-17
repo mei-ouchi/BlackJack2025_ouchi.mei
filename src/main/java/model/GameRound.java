@@ -15,13 +15,13 @@ public class GameRound {
 			this.dbValue=dbValue;
 		}
 		
-		public String getDb() {
+		public String getDbValue() {
 			return dbValue;
 		}
 		
 		public static GameResult fromDbValue(String dbValue) {
 			for(GameResult result : GameResult.values()){
-				if(result.getDb().equals(dbValue)) {
+				if(result.getDbValue().equals(dbValue)) {
 					return result;
 				}
 			}

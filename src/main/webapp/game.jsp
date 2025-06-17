@@ -5,6 +5,7 @@
 <%@ page import="model.Card" %>
 <%@ page import="model.Player" %>
 <%@ page import="model.Dealer" %>
+<%@ page import="model.Hand" %> <%-- Handクラスをインポート --%>
 <%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
@@ -14,6 +15,35 @@
 <link rel="stylesheet" href="css/common.css">
 <link rel="stylesheet" href="css/card.css">
 <title>BlackJack</title>
+<style>
+/* アクティブなハンドを目立たせるためのスタイル */
+.active-hand {
+    border: 3px solid #007bff; /* 青い枠線 */
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* 青い影 */
+    padding: 10px;
+    margin: 10px;
+    background-color: #e2f0ff;
+    border-radius: 8px;
+}
+.hand-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* ハンド間のスペース */
+    flex-wrap: wrap; /* 必要に応じて折り返す */
+}
+.player-hand-section {
+    border: 1px solid #ccc; /* 各ハンドのセクションのボーダー */
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #333;
+}
+.player-hand-section h4 {
+    color: #0056b3;
+    margin-bottom: 10px;
+}
+</style>
 </head>
 	
 <body>
@@ -23,9 +53,21 @@
 	<%
 		String message = (String)request.getAttribute("message");
 		String error = (String)request.getAttribute("error");
+		Boolean canSplit = (Boolean)request.getAttribute("canSplit"); // スプリット可能かどうかのフラグを取得
+		if (canSplit == null) {
+			canSplit = false; // nullの場合はfalseで初期化
+		}
 	%>
-		<% if(message != null && error != null) { %>
+		<% if(message != null && "true".equals(error)) { %>
 		<div class="alert alert-danger" role="alert">
+			<%= message %>
+		</div>
+		<% } else if (message != null && "false".equals(error)) { %>
+		<div class="alert alert-info" role="alert">
+			<%= message %>
+		</div>
+		<% } else if (message != null) { %>
+		<div class="alert alert-success" role="alert">
 			<%= message %>
 		</div>
 		<% } %>
@@ -41,6 +83,14 @@
 			if(roundEnd == null){
 				roundEnd = false;
 			}
+
+			// Playerの全てのハンドを取得
+			List<Hand> playerHands = null;
+			if (player != null) {
+				playerHands = player.getHands();
+			}
+			// アクティブなハンドのインデックスを取得
+			int activeHandIndex = (player != null && player.getActiveHand() != null) ? player.getHands().indexOf(player.getActiveHand()) : -1;
 		%>
 		
 		<% if(roundNumber != null && roundNumber > 0){ %>
@@ -99,7 +149,7 @@
 			</div>
 			
 			<div style="min-height: 50px;">
-			<%if(roundEnd != null && roundEnd){//ゲーム終了時のメッセージ %>
+			<%if(roundEnd){ // ゲーム終了時のメッセージ表示 %>
 			<div class="table-head">
 				<h1 class="text-dark text-center"><%= message %></h1>
 			</div>
@@ -107,25 +157,29 @@
 			</div>
 			
 			<h3 class="card-title text-center text-white mt-5"><strong>あなたの手札</strong></h4>
-			<div class="card-area text-center">
-			<div class="d-flex flex-wrap justify-content-center">
+			<div class="card-area text-center hand-container"> <%-- hand-containerを追加 --%>
 			<%
-			if(player != null && !player.getHandCard().isEmpty()){
-				for(Card card : player.getHandCard()){
+			if(playerHands != null && !playerHands.isEmpty()){
+				for(int i = 0; i < playerHands.size(); i++){ // 各ハンドをループ
+					Hand currentHand = playerHands.get(i);
+					// アクティブなハンド（現在操作中のハンド）にのみ active-hand クラスを適用
+					String handClass = (i == activeHandIndex && !roundEnd) ? "active-hand" : ""; 
 			%>
-			
-			<div class="card-item"><%=card.toString()%></div>
-			
-			<%} %>
-			
-			<p class="card-score text-dark bg-white">合計：<%=player.getCountHandCard() %></p>
-			
-			<%}else{ %>
-			
-				<p class="text-white">no card</p>
-				
-			<%} %>
+			<div class="player-hand-section <%= handClass %>">
+				<h4>ハンド<%= i + 1 %> (チップ: <%= currentHand.getBet() %>)</h4> <%-- ハンド番号とチップ額を表示 --%>
+				<div class="d-flex flex-wrap justify-content-center">
+				<%
+					for(Card card : currentHand.getHandCard()){ // 各ハンドのカードをループ
+				%>
+				<div class="card-item"><%=card.toString()%></div>
+				<%} %>
+				</div>
+				<p class="card-score text-dark bg-white">合計：<%=currentHand.getCountHandCard() %></p>
 			</div>
+			<%}
+			}else{ %>
+				<p class="text-white">no card</p>
+			<%} %>
 			</div>
 			
 		<div class="game-controls text-center mt-4">
@@ -143,7 +197,7 @@
 						<input type="number" id="betAmount" name="betAmount" value="0" class="form-control" min="0" max="10" required>
 					</div>
 					</div>
-					<div class="row justify-content-center align-items-center">
+					<div class="row justify-content="center" align-items-center">
 					<div class="mt-3 mb-5 col-sm-2">
 						<button type="submit" name="action" value="bet" class="btn btn-login btn-block">ゲーム開始</button>
 					</div>
@@ -151,7 +205,7 @@
 				</div>
 			</form>
 		
-		<%}else if(roundEnd != null && !roundEnd){//ゲームラウンド中%>
+		<%}else if(!roundEnd){ // ゲームラウンド中%>
 			<div class="mt-5 mb-5">
 				<form action="GameServlet" method="post" class="d-inline-block mr-2">
 					<button type="submit" name="action" value="hit" class="btn btn-hit">カードを引く</button>
@@ -160,9 +214,15 @@
 				<form action="GameServlet" method="post" class="d-inline-block mr-2">
 					<button type="submit" name="action" value="stand" class="btn btn-stand">確定</button>
 				</form>
+				
+				<% if (canSplit) { %> <%-- スプリット可能であればボタンを表示 --%>
+				<form action="GameServlet" method="post" class="d-inline-block mr-2">
+					<button type="submit" name="action" value="split" class="btn btn-warning">スプリット！</button> <%-- スプリットボタン --%>
+				</form>
+				<% } %>
 			</div>
 			
-		<%}else if(roundEnd != null && roundEnd){//ゲーム終了 %>
+		<%}else if(roundEnd){ // ゲーム終了 %>
 			<form action="GameServlet" method="post" class="mb-3">
 				<div class="form-group">
 				<div class="text-center mb-1">
@@ -182,7 +242,7 @@
 			<form action="GameServlet" method="post" class="d-inline-block mr-2">
 				<button type="submit" name="action" value="reset" class="btn btn-end mb-5" style="margin-top: 30px;">ゲーム終了</button>
 			</form>
-		<%} %>
+	<%} %>
 		</div>
 	</div>
 </body>

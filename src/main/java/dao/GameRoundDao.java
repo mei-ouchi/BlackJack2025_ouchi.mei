@@ -29,7 +29,7 @@ public class GameRoundDao extends BaseDao{
 			ps.setInt(7, gameRound.getBetChip());
 			ps.setInt(8, gameRound.getChipChange());
 			ps.setInt(9, gameRound.getPlayerCardIndex());
-			ps.setString(10, gameRound.getGameResult().getDb());
+			ps.setString(10, gameRound.getGameResult().getDbValue());
 			
 			ps.executeUpdate();
 			
@@ -86,7 +86,7 @@ public class GameRoundDao extends BaseDao{
 	public GameRound getGameRound(int roundId) throws BlackJackException{
 		GameRound gameRound = null;
 		
-		String sql = "SELECT round_id, session_id, round_number, player_card, dealer_card, player_score, dealer_score, bet_chip, chip_change, player_card_index game_result"+
+		String sql = "SELECT round_id, session_id, round_number, player_card, dealer_card, player_score, dealer_score, bet_chip, chip_change, player_card_index, game_result "+
 				"FROM game_round WHERE round_id = ?";
 		try(Connection con = getConnection();
 				PreparedStatement ps = con.prepareStatement(sql)){
@@ -131,7 +131,7 @@ public class GameRoundDao extends BaseDao{
 			ps.setInt(7, gameRound.getBetChip());
 			ps.setInt(8, gameRound.getChipChange());
 			ps.setInt(9, gameRound.getPlayerCardIndex());
-			ps.setString(10, gameRound.getGameResult().getDb());
+			ps.setString(10, gameRound.getGameResult().getDbValue());
 			ps.setInt(11, gameRound.getRoundId());
 			
 			ps.executeUpdate();
