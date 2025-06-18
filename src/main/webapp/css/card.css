@@ -134,4 +134,35 @@
 	background-position: center;
 }
 
+.player-hand-section {
+    border: none;
+    padding: 0;
+    margin: 0 5px;
+    background-color: transparent;
+    box-shadow: none;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.active-hand {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+}
+
+.player-hand-section h4 {
+    color: rgb(0, 0, 128);
+    margin-bottom: 10px;
+    text-align: center;
+    width: 100%;
+}
+
+
+
 

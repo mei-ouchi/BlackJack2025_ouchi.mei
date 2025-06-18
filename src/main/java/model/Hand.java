@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
-	private List<Card> handCard;//この手札のカードリスト
+	private List<Card> handCard;//手札のカードリスト
 	private int bet;//この手札の賭けチップ
 	
 	public Hand() {
@@ -17,7 +17,7 @@ public class Hand {
 	}
 	
 	public List<Card> getHandCard(){
-		return new ArrayList<>(handCard);
+		return this.handCard;
 	}
 	
 	public int getCountHandCard() {
