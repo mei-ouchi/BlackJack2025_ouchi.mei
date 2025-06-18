@@ -18,9 +18,8 @@ import exception.BlackJackException;
 import model.Card;
 import model.Dealer;
 import model.Deck;
-import model.GameRound;
-import model.GameRound.GameResult;
 import model.GameSession;
+import model.Hand;
 import model.Player;
 import model.User;
 
@@ -34,8 +33,8 @@ public class GameServlet extends HttpServlet {
 		
 		String action = request.getParameter("action");
 		String nextPage = "game.jsp";
-		String error = null;
 		String message = null;
+		String error = null;
 		
 		//ログイン確認
 		if(user == null) {
@@ -125,6 +124,7 @@ public class GameServlet extends HttpServlet {
 				deck = new Deck();
 				player = new Player(user.getUserName());
 				dealer = new Dealer();
+				player.getActiveHand().setBet(betChip);
 				
 				//初期カード配布
 				player.addHandCard(deck.takeCard());
@@ -136,6 +136,10 @@ public class GameServlet extends HttpServlet {
 				session.setAttribute("player", player);
 				session.setAttribute("dealer", dealer);
 				session.setAttribute("roundNumber", roundNumber);
+				
+				request.setAttribute("canSplit", player.canSplit());
+				request.setAttribute("message", null); 
+				request.setAttribute("error", null);
 			
 			//プレイヤーがカードを引く
 			}else if("hit".equals(action)) {
@@ -149,12 +153,22 @@ public class GameServlet extends HttpServlet {
 					rd.forward(request, response);
 					return;
 				}
-				player.addHandCard(deck.takeCard());
+				Hand activeHand=player.getActiveHand();
+				activeHand.addHandCard(deck.takeCard());
 				session.setAttribute("player", player);
 				
-				if(player.bust()) {
-					roundGameEnd(session, request, user, player, dealer, betChip, GameResult.PLAYER_BUST, userDao, gameSessionDao, gameRoundDao, gameSession, roundNumber, deck);
-					session.setAttribute("roundEnd", true);
+				if(activeHand.bust()) {
+					int currentActiveHandIndex = player.getHands().indexOf(activeHand);
+			        if (currentActiveHandIndex + 1 < player.getHands().size()) {
+			        	player.setActiveHandIndex(currentActiveHandIndex + 1);
+			        	session.setAttribute("player", player);
+			        	message = "手札" + (currentActiveHandIndex + 1) + "がバーストしました。次の手札に切り替わります。手札" + (player.getActiveHandIndex() + 1) + "を操作中";
+			        	request.setAttribute("canSplit", player.canSplit());
+			        }else {
+			        	message = processEndRound(session, request, user, player, dealer, userDao, gameSessionDao, gameRoundDao, gameSession, roundNumber, deck);
+				}
+			}else {
+					request.setAttribute("canSplit", false);
 				}
 			
 			//手札の確定
@@ -169,13 +183,47 @@ public class GameServlet extends HttpServlet {
 					rd.forward(request, response);
 					return;
 				}
-				dealer.takeTurnCard(deck);
-				session.setAttribute("dealer", dealer);
 				
-				GameResult gameResult = whichWin(player, dealer);
-				roundGameEnd(session, request, user, player, dealer, betChip, gameResult, userDao, gameSessionDao, gameRoundDao, gameSession, roundNumber, deck);
-				session.setAttribute("roundEnd", true);
-			
+				int currentActiveHandIndex = player.getHands().indexOf(player.getActiveHand());
+				
+				if (currentActiveHandIndex + 1 < player.getHands().size()) {
+
+					player.setActiveHandIndex(currentActiveHandIndex + 1);
+					session.setAttribute("player", player);
+					message = "次の手札に切り替わりました。手札" + (player.getActiveHandIndex() + 1) + "を操作してください。";
+					request.setAttribute("canSplit", player.canSplit());
+			        
+			    } else {
+			    	message = processEndRound(session, request, user, player, dealer, userDao, gameSessionDao, gameRoundDao, gameSession, roundNumber, deck); 
+			    }
+				
+			}else if("split".equals(action)) {
+				if(player == null || deck == null || dealer == null || gameSession == null || betChip == null) {
+					message="ゲームを開始できません";
+					error="true";
+					request.setAttribute("message", message);
+					request.setAttribute("error", error);
+					session.setAttribute("roundEnd", true);
+					RequestDispatcher rd = request.getRequestDispatcher(nextPage);
+					rd.forward(request, response);
+					return;
+				}
+				if(player.canSplit()) {
+					player.performSplit(betChip);
+					user.setNowChip(user.getNowChip()-betChip);
+					session.setAttribute("user", user);
+					
+					player.getHands().get(0).addHandCard(deck.takeCard());
+					player.getHands().get(1).addHandCard(deck.takeCard());
+					
+					session.setAttribute("player", player);
+					request.setAttribute("canSplit", false);
+				}else {
+					message="スプリットできませんでした";
+					error="true";
+				}
+				
+				
 			//ゲームリセット
 			}else if("reset".equals(action)) {
 				session.removeAttribute("deck");
@@ -207,113 +255,13 @@ public class GameServlet extends HttpServlet {
 			request.setAttribute("message", "システムエラーが発生しました。再度お試しください。");
 			request.setAttribute("error", "true");
 		}
+		request.setAttribute("message",message);
+		request.setAttribute("error", error);
 		RequestDispatcher rd = request.getRequestDispatcher(nextPage);
 		rd.forward(request, response);
 	}
-	//勝敗判定
-	private GameResult whichWin(Player player, Dealer dealer) {
-		int playerTotal = player.getCountHandCard();
-		int dealerTotal = dealer.getCountHandCard();
-		
-		if(player.bust()) {
-			return GameResult.PLAYER_BUST;
-		}else if(dealer.bust()) {
-			return GameResult.DEALER_BUST;
-		}else if(playerTotal > dealerTotal) {
-			return GameResult.PLAYER_WIN;
-		}else if(playerTotal < dealerTotal) {
-			return GameResult.DEALER_WIN;
-		}else {
-			return GameResult.DRAW;
-		}
-	}
-	//ラウンド終了処理
-	private void roundGameEnd(HttpSession session, HttpServletRequest request, User user, Player player, Dealer dealer, int betChip, GameResult gameResult, UserDao userDao, GameSessionDao gameSessionDao, GameRoundDao gameRoundDao, GameSession gameSession, int roundNumber, Deck deck) throws BlackJackException{
-		int chipChange = 0;
-		String message = null;
-		String error = null;
-		
-		int totalGame = user.getTotalGame();
-		int wins = user.getWins();
-		int loses = user.getLoses();
-		int draws = user.getDraws();
-		int nowChip = user.getNowChip();
-		
-		totalGame++;
-		
-		switch(gameResult){
-			case PLAYER_WIN:
-				chipChange = betChip;
-				nowChip += betChip*2;
-				wins++;
-				message = "あなたの勝ちです！チップが"+chipChange+"増えました";
-				break;
-			case DEALER_WIN:
-				chipChange = -betChip;
-				loses++;
-				message = "ディーラーの勝ちです！チップが"+betChip+"減りました";
-				break;
-			case DRAW:
-				chipChange = 0;
-				nowChip += betChip;
-				draws++;
-				message = "引き分けです！チップが戻りました";
-				break;
-			case PLAYER_BUST:
-				chipChange = -betChip;
-				loses++;
-				message = "あなたはバーストしました…ディーラーの勝ちです！チップが"+betChip+"減りました";
-				break; 
-			case DEALER_BUST:
-				chipChange = betChip;
-				nowChip += betChip*2;
-				wins++;
-				message = "ディーラーがバーストしました！あなたの勝ちです！チップが"+chipChange+"増えました";
-				break;
-		}
-		
-		user.setTotalGame(totalGame);
-		user.setWins(wins);
-		user.setLoses(loses);
-		user.setDraws(draws);
-		user.setNowChip(nowChip);
-		
-		try {//ゲーム終了後のいろいろな更新
-			userDao.updateUserStats(user.getUserId(), totalGame, wins, loses, draws, nowChip);
-			
-			gameSession.setEndChip(nowChip);
-			gameSessionDao.updateGameSession(gameSession);
-			
-			String playerHandCardString = cardListString(player.getHandCard());
-			String dealerHandCardString = cardListString(dealer.getHandCard());
-			
-			GameRound gameRound = new GameRound(
-			gameSession.getSessionId(),
-			roundNumber,
-			playerHandCardString,
-			dealerHandCardString,
-			player.getCountHandCard(),
-			dealer.getCountHandCard(),
-			betChip,
-			chipChange,
-			player.getHandCard().size(),
-			gameResult
-			);
-			
-			gameRoundDao.newGameRound(gameRound);
-			
-			session.setAttribute("user", user);
-			
-			request.setAttribute("message", message);
-			request.setAttribute("error", error);
-			
-			
-		}catch (Exception e) {
-			e.printStackTrace(); 
-			message="ゲーム結果の保存に失敗しました";
-			error="true";
-		}
-	}
+	
+	
 	
 	private String cardListString(List<Card> cards) {
 		StringBuilder sb = new StringBuilder();
@@ -339,6 +287,13 @@ public class GameServlet extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
 			rd.forward(request, response);
 			return;
+		}
+		
+		Player player=(Player)session.getAttribute("player");
+		if(player != null) {
+			request.setAttribute("playerHands", player.getHands());
+			request.setAttribute("activeHandIndex", player.getHands().indexOf(player.getActiveHand()));
+			request.setAttribute("canSplit", player.canSplit());
 		}
 		
 		if(session.getAttribute("player") == null || session.getAttribute("dealer") == null || session.getAttribute("gameSession") == null || session.getAttribute("deck") == null) {
