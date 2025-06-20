@@ -7,6 +7,8 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
 <link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 <title>BlackJack</title>
 </head>
 
@@ -15,7 +17,7 @@
 	
 	<main>
 		<div class="login-form-container">
-		<h2 class="login-heading text-center text-white my-4">ログイン</h2>
+		<h2 class="login-heading text-center text-white my-4"><i class="fas fa-key"></i> Login</h2>
 		
 		<%
 			String message = (String)request.getAttribute("message");
@@ -47,7 +49,7 @@
 				</div>
 				<input type="password" id="loginPassword" name="password" class="form-control" required>
 			</div>
-			<button class="btn btn-lg btn-login btn-block btn-login font-weight-bold mb-2" type="submit">
+			<button class="btn btn-lg btn-login btn-block btn-login font-weight-bold mt-4 mb-2" type="submit">
 				ログイン
 			</button>
 			</form>

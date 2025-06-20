@@ -18,6 +18,8 @@ import exception.BlackJackException;
 import model.Card;
 import model.Dealer;
 import model.Deck;
+import model.GameRound;
+import model.GameRound.GameResult;
 import model.GameSession;
 import model.Hand;
 import model.Player;
@@ -261,7 +263,173 @@ public class GameServlet extends HttpServlet {
 		rd.forward(request, response);
 	}
 	
+	//各メソッドの処理
+	private String processEndRound(HttpSession session, HttpServletRequest request, User user, Player player, Dealer dealer, UserDao userDao, GameSessionDao gameSessionDao, GameRoundDao gameRoundDao, GameSession gameSession, int roundNumber, Deck deck) throws BlackJackException {
+		dealer.takeTurnCard(deck);
+		session.setAttribute("dealer", dealer);
+		
+		StringBuilder currentRoundMessages = new StringBuilder();
+		
+		int totalGame = user.getTotalGame();
+		int wins = user.getWins();
+		int loses = user.getLoses();
+		int draws = user.getDraws();
+		int nowChip = user.getNowChip();
+		
+		// 各ハンドの結果を処理
+		for(int i = 0; i < player.getHands().size(); i++) {
+			Hand currentHand = player.getHands().get(i);
+			GameResult gameResultForHand = whichWin(currentHand, dealer);
+			
+			int chipChangeForHand = calculateChipChange(currentHand.getBet(), gameResultForHand);
+			nowChip += chipChangeForHand;
+			
+			totalGame++;
+			switch(gameResultForHand) {
+				case PLAYER_WIN:
+				case DEALER_BUST:
+					wins++;
+					break;
+				case DEALER_WIN:
+				case PLAYER_BUST:
+					loses++;
+					break;
+				case DRAW:
+					draws++;
+					break;
+			}
+			
+			String messageForHand = getGameResultMessage(gameResultForHand, currentHand.getBet(), chipChangeForHand);
+			if (currentRoundMessages.length() > 0) {
+			    currentRoundMessages.append("<br>");
+			}
+			if (player.getHands().size() > 1) {
+				currentRoundMessages.append("手札").append(i + 1).append("：");
+			}
+			currentRoundMessages.append(messageForHand);
+			
+			// 各ハンドのゲームラウンドデータを保存
+			saveGameRoundData(gameSession, roundNumber, currentHand, dealer, gameResultForHand, chipChangeForHand, gameRoundDao, i);
+		}
+		
+		user.setTotalGame(totalGame);
+		user.setWins(wins);
+		user.setLoses(loses);
+		user.setDraws(draws);
+		user.setNowChip(nowChip);
+		
+		// データベースの更新
+		try {
+			userDao.updateUserStats(user.getUserId(), user.getTotalGame(), user.getWins(), user.getLoses(), user.getDraws(), user.getNowChip());
+			gameSession.setEndChip(user.getNowChip());
+			gameSessionDao.updateGameSession(gameSession);
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (currentRoundMessages.length() > 0) {
+			    currentRoundMessages.append("<br>");
+			}
+			currentRoundMessages.append("ゲーム結果の保存中にエラーが発生しました。");
+			request.setAttribute("error", "true");
+		}
+		
+		session.setAttribute("user", user);
+		session.setAttribute("roundEnd", true);
+		request.setAttribute("error", null);
+		
+		return currentRoundMessages.toString();
+		
+	}
 	
+	//勝敗判定
+	private GameResult whichWin(Hand playerHand, Dealer dealer) {
+		int playerTotal = playerHand.getCountHandCard();
+		int dealerTotal = dealer.getCountHandCard();
+		
+		if(playerHand.bust() && dealer.bust()) {
+			return GameResult.DRAW;
+		}else if(playerHand.bust()) {
+			return GameResult.PLAYER_BUST;
+		}else if(dealer.bust()) {
+			return GameResult.DEALER_BUST;
+		}else if(playerTotal > dealerTotal) {
+			return GameResult.PLAYER_WIN;
+		}else if(playerTotal < dealerTotal) {
+			return GameResult.DEALER_WIN;
+		}else {
+			return GameResult.DRAW;
+		}
+	}
+	
+	//チップの変更料の計算
+	private int calculateChipChange(int betChip, GameResult gameResult) {
+		switch(gameResult) {
+			case PLAYER_WIN:
+			case DEALER_BUST:
+				return betChip*2;
+			case DEALER_WIN:
+			case PLAYER_BUST:
+				return 0;
+			case DRAW:
+				return betChip;
+			default:
+				return 0;
+		}
+	}
+	
+	//ゲームの結果のメッセージ
+	private String getGameResultMessage(GameResult gameResult, int betChip, int chipChange) {
+		switch(gameResult) {
+			case PLAYER_WIN:
+				return "あなたの勝ちです！チップが増えました";
+			case DEALER_BUST:
+				return "ディーラーがバースト！あなたの勝ちです！チップが増えました";
+			case DEALER_WIN:
+				return "あなたの負けです．．．チップを失いました";
+			case PLAYER_BUST:
+				return "バースト．．．あなたの負けです！チップを失いました";
+			case DRAW:
+				return "引き分けです！チップが戻りました";
+			default:
+				return "";
+		}
+	}
+	
+	private void updateUserGameStats(User user, GameResult gameResult) {
+		user.setTotalGame(user.getTotalGame()+1);
+		switch(gameResult) {
+			case PLAYER_WIN:
+			case DEALER_BUST:
+				user.setWins(user.getWins()+1);
+				break;
+			case DEALER_WIN:
+			case PLAYER_BUST:
+				user.setLoses(user.getLoses()+1);
+				break;
+			case DRAW:
+				user.setDraws(user.getDraws()+1);
+			default:
+				break;
+		}
+	}
+	
+	private void saveGameRoundData(GameSession gameSession, int roundNumber, Hand playerHand, Dealer dealer, GameResult gameResult, int chipChange, GameRoundDao gameRoundDao, int playerCardIndex) throws BlackJackException {
+		String playerHandCardString=cardListString(playerHand.getHandCard());
+		String dealerHandCardString=cardListString(dealer.getHandCard());
+		
+		GameRound gameRound = new GameRound(
+				gameSession.getSessionId(),
+				roundNumber,
+				playerHandCardString,
+				dealerHandCardString,
+				playerHand.getCountHandCard(),
+				dealer.getCountHandCard(),
+				playerHand.getBet(),
+				chipChange,
+				playerCardIndex,
+				gameResult
+				);
+		gameRoundDao.newGameRound(gameRound);
+	}
 	
 	private String cardListString(List<Card> cards) {
 		StringBuilder sb = new StringBuilder();

@@ -29,7 +29,7 @@
 	<div class="action-buttons d-flex flex-column align-items-center">
 		<form action="GameServlet" method="post">
 			<input type="hidden" name="action" value="start">
-			<button type="submit" class="btn btn-login btn-lg">Game Start!</button>
+			<button type="submit" class="btn btn-start btn-lg">Play！</button>
 		</form>
 	</div>
 	
