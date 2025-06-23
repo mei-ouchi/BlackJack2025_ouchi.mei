@@ -14,6 +14,8 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
 <link rel="stylesheet" href="css/common.css">
 <link rel="stylesheet" href="css/card.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 <title>BlackJack</title>
 </head>
 	
@@ -113,7 +115,7 @@
 			}else{
 			%>
 			
-			<p class="text-white">no card</p>
+			<p class="text-white"><i class="fas fa-sync-alt fa-spin fa-lg"></i></p>
 			
 			<%} %>
 			
@@ -154,7 +156,7 @@
 				</div>
 				<%}
 					}else{ %>
-			   		 <p class="text-white">no card</p>
+			   		 <p class="text-white"><i class="fas fa-sync-alt fa-spin fa-lg"></i></p>
 				<%} %>
 				</div>
 			

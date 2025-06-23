@@ -10,6 +10,7 @@ public class User {
 	private int loses;
 	private int draws;
 	private int nowChip;
+	private int rank;
 	
 	public User(String userId, String userName, String loginPassword) {
 		this.userId = userId;
@@ -20,6 +21,7 @@ public class User {
 		this.loses = 0;
 		this.draws = 0;
 		this.nowChip = 100;
+		this.rank = 0;
 	}
 	
 	public User(String userId, String userName, String loginPassword, int totalGame, int wins, int loses, int draws, int nowChip) {
@@ -31,6 +33,7 @@ public class User {
     	this.loses = loses;
     	this.draws = draws;
     	this.nowChip = nowChip;
+		this.rank = 0;
 	}
 	
     public User(String userId, String userName, int totalGame, int wins, int loses, int draws, int nowChip) {
@@ -41,6 +44,18 @@ public class User {
     	this.loses = loses;
     	this.draws = draws;
     	this.nowChip = nowChip;
+		this.rank = 0;
+    }
+    
+    public User(String userId, String userName, int totalGame, int wins, int loses, int draws, int nowChip, int rank) {
+    	this.userId = userId;
+    	this.userName = userName;
+    	this.totalGame = totalGame;
+    	this.wins = wins;
+    	this.loses = loses;
+    	this.draws = draws;
+    	this.nowChip = nowChip;
+		this.rank = rank;
     }
     
 	public String getUserId() {
@@ -106,4 +121,14 @@ public class User {
 	public void setNowChip(int nowChip) {
 		this.nowChip = nowChip;
 	}
+	
+	public int getRank() {
+		return rank;
+	}
+	
+	public void setRank(int rank) {
+		this.rank = rank;
+	}
+	
+	
 }

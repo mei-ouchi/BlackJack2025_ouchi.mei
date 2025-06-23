@@ -38,8 +38,8 @@
 	
 	<main>
 	
-	<div class="welcome-session">
-		<h1 class="display-4 text-center text-warning mb-4"><p class="user"><strong>あなたの戦績</strong></h1>
+		<div class="ranking-session mb-4">
+			<h2><span>あなたの戦績</span></h2>
 		<div class="card shadow p-4 mb-5">
 			<div class="card-body">
 			<%
@@ -72,8 +72,9 @@
 			<%}%>
 			</div>
 		</div>
-	
-		<h1 class="welcome-session text-center mb-4"><p class="user"><strong>勝率ランキングTop5</strong></h1>
+		<div class="ranking-session text-center mb-4">
+			<h2><span>勝率ランキングTop5</span></h2>
+		</div>
 		<div class="row justify-content-center">
 			<div class="col-12 col-md-12 col-lg-12">
 				<div class="table-responsive">
@@ -92,21 +93,21 @@
 							DecimalFormat df_top = new DecimalFormat("#.##");
 			
 							if(topUserList != null && !topUserList.isEmpty()){
-							for(int i=0; i<topUserList.size(); i++){
-							User topUserStats= topUserList.get(i);
-					
-							int topUserTotalGame = topUserStats.getTotalGame();
-							int topUserWins = topUserStats.getWins();
-							int topUserNowChip = topUserStats.getNowChip();
-					
-							double topUserWinRate = 0.0;
-							if (topUserTotalGame > 0) {
-							topUserWinRate = (double) topUserWins / topUserTotalGame * 100;
-							}
+								for(int i=0; i<topUserList.size(); i++){
+									User topUserStats= topUserList.get(i);
+							
+									int topUserTotalGame = topUserStats.getTotalGame();
+									int topUserWins = topUserStats.getWins();
+									int topUserNowChip = topUserStats.getNowChip();
+							
+									double topUserWinRate = 0.0;
+									if (topUserTotalGame > 0) {
+									topUserWinRate = (double) topUserWins / topUserTotalGame * 100;
+									}
 							%>
 							
 							<tr class="text-center">
-								<td><strong><%=i+1 %>位</strong></td>
+								<td><strong><%=topUserStats.getRank() %>位</strong></td>
 								<td><p class="user"><strong><%=topUserStats.getUserName() %></strong>さん<p></td>
 								<td><%=df_top.format(topUserWinRate) %>%</td>
 								<td><%=topUserNowChip %></td>

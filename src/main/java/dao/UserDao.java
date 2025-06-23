@@ -109,12 +109,19 @@ public class UserDao extends BaseDao{
 		
 		try(Connection con = getConnection();
 				PreparedStatement ps = con.prepareStatement(
-						"SELECT user_id, user_name, total_game, wins, loses, draws, now_chip,"
-						+"CASE WHEN total_game>0 THEN (CAST(wins AS DECIMAL) / total_game) ELSE 0 END AS win_rate "
-						+ "FROM user "
-						+ "ORDER BY win_rate DESC, wins DESC, total_game ASC LIMIT ?")){
+						"SELECT user_id, user_name, total_game, wins, loses, draws, now_chip, rnk " +
+								"FROM ( " +
+								"SELECT *, " +
+								"CASE WHEN total_game > 0 THEN (CAST(wins AS DECIMAL) / total_game) ELSE 0 END AS win_rate, " +
+								"DENSE_RANK() OVER (ORDER BY (CASE WHEN total_game > 0 THEN (CAST(wins AS DECIMAL) / total_game) ELSE 0 END) DESC) as rnk " +
+								"FROM user " +
+								"WHERE total_game > 0 " +
+								") AS ranked_users " +
+								"WHERE rnk <= ? " +
+								"ORDER BY rnk ASC, user_id ASC "
+								)){
 
-			ps.setInt(1, limit);
+							ps.setInt(1, limit);
 			
 			try(ResultSet rs = ps.executeQuery()){
 				while(rs.next()) {
@@ -125,7 +132,8 @@ public class UserDao extends BaseDao{
 						rs.getInt("wins"),
 						rs.getInt("loses"),
 						rs.getInt("draws"),
-						rs.getInt("now_chip")
+						rs.getInt("now_chip"),
+						rs.getInt("rnk")
 						));
 				}
 			}

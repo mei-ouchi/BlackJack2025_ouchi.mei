@@ -22,8 +22,23 @@ public class Hand {
 	
 	public int getCountHandCard() {
 		int count=0;
+		int aceCount=0;
+		
 		for(Card card : handCard) {
-			count += card.getPoint();
+			if(card.getNo() == 1) {
+				aceCount++;
+				count += 1;
+			}else {
+				count += card.getPoint();
+			}
+		}
+		
+		if(handCard.size()==2 && aceCount==1) {
+			for(Card card : handCard) {
+				if(card.getNo()>=10 && card.getNo()<=13) {
+					return 21;
+				}
+			}
 		}
 		return count;
 	}

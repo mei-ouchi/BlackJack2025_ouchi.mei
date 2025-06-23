@@ -65,6 +65,7 @@ public class UserServlet extends HttpServlet {
 		}catch(BlackJackException e) {
 			e.printStackTrace();
 			message = "アカウント登録に失敗しました。このユーザ名は既に使用されている可能性があります。";
+			error="true";
 			nextPage = "NewAccount.jsp";
 		}catch (Exception e) {
 			e.printStackTrace();

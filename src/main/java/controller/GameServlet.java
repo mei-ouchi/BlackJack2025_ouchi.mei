@@ -281,7 +281,7 @@ public class GameServlet extends HttpServlet {
 			Hand currentHand = player.getHands().get(i);
 			GameResult gameResultForHand = whichWin(currentHand, dealer);
 			
-			int chipChangeForHand = calculateChipChange(currentHand.getBet(), gameResultForHand);
+			int chipChangeForHand = calculateChipChange(currentHand.getBet(), gameResultForHand, currentHand);
 			nowChip += chipChangeForHand;
 			
 			totalGame++;
@@ -299,7 +299,7 @@ public class GameServlet extends HttpServlet {
 					break;
 			}
 			
-			String messageForHand = getGameResultMessage(gameResultForHand, currentHand.getBet(), chipChangeForHand);
+			String messageForHand = getGameResultMessage(gameResultForHand, currentHand.getBet(), chipChangeForHand, currentHand);
 			if (currentRoundMessages.length() > 0) {
 			    currentRoundMessages.append("<br>");
 			}
@@ -345,9 +345,7 @@ public class GameServlet extends HttpServlet {
 		int playerTotal = playerHand.getCountHandCard();
 		int dealerTotal = dealer.getCountHandCard();
 		
-		if(playerHand.bust() && dealer.bust()) {
-			return GameResult.DRAW;
-		}else if(playerHand.bust()) {
+		if(playerHand.bust()) {
 			return GameResult.PLAYER_BUST;
 		}else if(dealer.bust()) {
 			return GameResult.DEALER_BUST;
@@ -360,10 +358,14 @@ public class GameServlet extends HttpServlet {
 		}
 	}
 	
-	//チップの変更料の計算
-	private int calculateChipChange(int betChip, GameResult gameResult) {
+	//チップの変更の計算
+	private int calculateChipChange(int betChip, GameResult gameResult, Hand playerHand) {
 		switch(gameResult) {
 			case PLAYER_WIN:
+				if(playerHand.getHandCard().size()==2 && playerHand.getCountHandCard()==21) {
+					return (int)(betChip*2.5);
+				}
+				return betChip*2;
 			case DEALER_BUST:
 				return betChip*2;
 			case DEALER_WIN:
@@ -377,9 +379,12 @@ public class GameServlet extends HttpServlet {
 	}
 	
 	//ゲームの結果のメッセージ
-	private String getGameResultMessage(GameResult gameResult, int betChip, int chipChange) {
+	private String getGameResultMessage(GameResult gameResult, int betChip, int chipChange, Hand playerHand) {
 		switch(gameResult) {
 			case PLAYER_WIN:
+				if(playerHand.getHandCard().size()==2 && playerHand.getCountHandCard()==21) {
+					return "ブラックジャックで勝ちです！チップが増えました";
+				}
 				return "あなたの勝ちです！チップが増えました";
 			case DEALER_BUST:
 				return "ディーラーがバースト！あなたの勝ちです！チップが増えました";
