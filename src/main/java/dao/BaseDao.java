@@ -24,7 +24,7 @@ public abstract class BaseDao {
 			throw new BlackJackException("JDBCドライバが見つかりません");
 		}catch(SQLException e) {
 			e.printStackTrace();
-			throw new BlackJackException("データバース接続に失敗しました");
+			throw new BlackJackException("データベース接続に失敗しました");
 		}
 	}
 }

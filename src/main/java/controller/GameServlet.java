@@ -348,6 +348,9 @@ public class GameServlet extends HttpServlet {
 		if(playerHand.bust()) {
 			return GameResult.PLAYER_BUST;
 		}else if(dealer.bust()) {
+			if(playerHand.getHandCard().size()==2 && playerHand.getCountHandCard()==21) {
+			return GameResult.PLAYER_WIN;
+			}
 			return GameResult.DEALER_BUST;
 		}else if(playerTotal > dealerTotal) {
 			return GameResult.PLAYER_WIN;
